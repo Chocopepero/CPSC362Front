@@ -5,7 +5,10 @@ import RegisterPage from './pages/RegisterPage';
 import IndexPage from './pages/IndexPage.jsx';
 import LoginPage from './pages/LoginPage';
 
+
 import axios from "axios"
+import DeluxeRoom from './rooms/DeluxeRoom';
+import StandardRoom from './rooms/StandardRoom';
 
 
 function App() {
@@ -16,7 +19,8 @@ function App() {
         <Route index element={<IndexPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-
+        <Route path="/DeluxeRoom" element={<DeluxeRoom />} />
+        <Route path="/StandardRoom" element={<StandardRoom />} />
         
       
     </Routes>
