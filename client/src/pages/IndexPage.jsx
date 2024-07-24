@@ -1,9 +1,10 @@
 import {Link} from "react-router-dom";
 
+
 export default function IndexPage(){
     return(
         <div>
-            fedndex page here
-    </div>
+                <h1>Hello World, should be the main page </h1>
+        </div>
     )
 }
