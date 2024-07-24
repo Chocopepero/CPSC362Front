@@ -50,8 +50,8 @@ export default function IndexPage() {
                     <span className="font-bold text-white">Hotel Blissful</span>
                 </Link>
                 <nav className="flex gap-4">
-                    <Link to="/" className="hover:underline">Home</Link>
-                    <Link to="/rooms" className="hover:underline">Rooms</Link>
+                    <Link to="/login" className="hover:underline">Login</Link>
+                    <Link to="/register" className="hover:underline">Register</Link>
                     <Link to="/contact" className="hover:underline">Contact</Link>
 
 

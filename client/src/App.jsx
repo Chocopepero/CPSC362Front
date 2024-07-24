@@ -9,6 +9,7 @@ import LoginPage from './pages/LoginPage';
 import axios from "axios"
 import DeluxeRoom from './rooms/DeluxeRoom';
 import StandardRoom from './rooms/StandardRoom';
+import SuiteRoom from './rooms/SuiteRoom';
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/DeluxeRoom" element={<DeluxeRoom />} />
         <Route path="/StandardRoom" element={<StandardRoom />} />
+        <Route path="/SuiteRoom" element ={<SuiteRoom />} />
         
       
     </Routes>
