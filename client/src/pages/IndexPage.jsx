@@ -33,7 +33,8 @@ export default function IndexPage() {
             name: 'Suite',
             description: 'A luxurious suite with a separate living area.',
             price: '$300 per night',
-            imageUrl: img3
+            imageUrl: img3, 
+            link: '/SuiteRoom'
         }
     ];
     return (
