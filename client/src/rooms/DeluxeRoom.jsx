@@ -1,52 +1,55 @@
-import deluxeRoomImage from '../images/Hotelpic1.jpeg'; // Adjust the path as necessary
+import deluxeImage1 from '../images/DeluxeRoom.webp'; 
+import deluxeImage2 from '../images/DeluxeRoom2.webp'; 
+import deluxeImage3 from '../images/DeluxeRoom3.webp';
+import deluxeImage4 from '../images/DeluxeRoom4.webp';
+import deluxeImage5 from '../images/DeluxeRoom5.webp';
 
-import {Link} from "react-router-dom";
-
-
-
+import { Link } from "react-router-dom";
 
 export default function DeluxeRoom() {
-  
-
     return (
-      
-      <div>
-
-     
-            <header className="p-4 flex justify-between items-center bg-blue-500 text-white">
-                <Link to="/" className="flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-8 w-8 -rotate-90">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                    </svg>
-                    <span className="font-bold text-white">Hotel Blissful</span>
-                </Link>
-                <nav className="flex gap-4">
-                    <Link to="/login" className="hover:underline">Login</Link>
-                    <Link to="/register" className="hover:underline">Register</Link>
-                    <Link to="/contact" className="hover:underline">Contact</Link>
-
-
-
-                </nav>
-            </header>
-
-
-
-
-        
-      
-            <div className="max-w-4xl mx-auto p-6">
-                <div className="bg-white shadow-lg rounded-lg p-6">
-                    <h2 className="text-2xl font-semibold mb-4 text-center">Deluxe Room</h2>
-                    <img src={deluxeRoomImage} alt="Deluxe Room" className="room-image w-full h-64 object-cover rounded-lg mb-4" />
-                    <p className="room-description text-gray-700 mb-4">A spacious room with a beautiful view of the city.</p>
-                    <p className="room-price text-xl font-semibold text-blue-600 mb-4">$200 per night</p>
+        <div className="max-w-6xl mx-auto p-6">
+            <div className="bg-white shadow-lg rounded-lg p-6 flex">
+                <div className="w-1/2 pr-4">
+                    <div className="grid grid-cols-2 gap-4">
+                        <img src={deluxeImage1} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={deluxeImage2} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={deluxeImage3} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={deluxeImage4} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={deluxeImage5} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                    </div>
+                </div>
+                <div className="w-1/2 pl-4 flex flex-col justify-between">
+                    <div>
+                        <h2 className="text-2xl font-semibold mb-4 text-center">Deluxe Room</h2>
+                        <p className="room-description text-gray-700 mb-4">A spacious room with a beautiful view of the city.</p>
+                        <div className="flex items-start justify-start mb-4 flex-col space-y-4">
+                            <div className="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                                </svg>
+                                <span className="ml-2">3 Rooms</span>
+                            </div>
+                            <div className="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.288 15.038a5.25 5.25 0 0 1 7.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12.53 18.22l-.53.53-.53-.53a.75.75 0 0 1 1.06 0Z" />
+                                </svg>
+                                <span className="ml-2">Free WiFi</span>
+                            </div>
+                            <div className="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                                </svg>
+                                <span className="ml-2">Free cancellation two weeks prior</span>
+                            </div>
+                        </div>
+                        <p className="room-price text-xl font-semibold text-blue-600 mb-4">$200 per night</p>
+                    </div>
                     <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">
                         Book Now
                     </button>
                 </div>
             </div>
         </div>
-
     );
 }
