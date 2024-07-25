@@ -35,14 +35,17 @@ export default function DeluxeRoom() {
 
         
       
-      <div className="deluxe-room">
-
-            <h2>Deluxe Room</h2>
-            <img src={deluxeRoomImage} alt="Deluxe Room" className="room-image" />
-            <p className="room-description">A spacious room with a beautiful view of the city.</p>
-            <p className="room-price">$200 per night</p>
-        </div>
-
+            <div className="max-w-4xl mx-auto p-6">
+                <div className="bg-white shadow-lg rounded-lg p-6">
+                    <h2 className="text-2xl font-semibold mb-4 text-center">Deluxe Room</h2>
+                    <img src={deluxeRoomImage} alt="Deluxe Room" className="room-image w-full h-64 object-cover rounded-lg mb-4" />
+                    <p className="room-description text-gray-700 mb-4">A spacious room with a beautiful view of the city.</p>
+                    <p className="room-price text-xl font-semibold text-blue-600 mb-4">$200 per night</p>
+                    <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                        Book Now
+                    </button>
+                </div>
+            </div>
         </div>
 
     );
