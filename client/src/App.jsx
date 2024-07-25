@@ -11,13 +11,17 @@ import DeluxeRoom from './rooms/DeluxeRoom';
 import StandardRoom from './rooms/StandardRoom';
 import SuiteRoom from './rooms/SuiteRoom';
 import PaymentPage from './pages/PaymentPage';
-
+import AccountPage from './pages/AccountPage.jsx';
+import Header from './Header.jsx';
+import Footer from './Footer.jsx';
 
 function App() {
   return (
-    <Routes>
+    <div>
+      <Header/>
+      <Routes>
       
-      <Route path="/" element={<Layout />} />
+        <Route path="/" element={<Layout />} />
         <Route index element={<IndexPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
@@ -25,9 +29,11 @@ function App() {
         <Route path="/StandardRoom" element={<StandardRoom />} />
         <Route path="/SuiteRoom" element ={<SuiteRoom />} />
         <Route path="/Payment" element ={<PaymentPage />} />
+        <Route path="/account" element ={<AccountPage />} />
       
-    </Routes>
-    
+      </Routes>
+      <Footer/>
+    </div>
   );
 }
 

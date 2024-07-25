@@ -1,18 +1,17 @@
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import React from "react";
 
-export default function Header() {
+export default function Header({ loggedin }) {
     return (
         <div>
-            <header className="flex justify-between items-center">
-                <Link to={'/'} className="flex items-center gap-1">
+            <header className="p-4 flex justify-between items-center bg-blue-500 text-white">
+                <Link to="/" className="flex items-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-8 w-8 -rotate-90">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
                     <span className="font-bold text-cl">Hotel Blissful</span>
-                    
                 </Link>
-                <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300">
+                <div className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 shadow-md shadow-gray-300 bg-white text-black">
                     <div>Anywhere</div>
                     <div className="border-l border-gray-300"></div>
                     <div>Any Week</div>
@@ -24,7 +23,7 @@ export default function Header() {
                         </svg>
                     </button>
                 </div>
-                <Link to={user?'/account':'/login'} className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 items-center">
+                <Link to={loggedin ? '/account' : '/login'} className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
@@ -37,5 +36,4 @@ export default function Header() {
             </header>
         </div>
     );
-
 }
