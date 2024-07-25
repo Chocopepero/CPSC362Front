@@ -10,6 +10,7 @@ import axios from "axios"
 import DeluxeRoom from './rooms/DeluxeRoom';
 import StandardRoom from './rooms/StandardRoom';
 import SuiteRoom from './rooms/SuiteRoom';
+import PaymentPage from './pages/PaymentPage';
 
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
         <Route path="/DeluxeRoom" element={<DeluxeRoom />} />
         <Route path="/StandardRoom" element={<StandardRoom />} />
         <Route path="/SuiteRoom" element ={<SuiteRoom />} />
-        
+        <Route path="/Payment" element ={<PaymentPage />} />
       
     </Routes>
     
