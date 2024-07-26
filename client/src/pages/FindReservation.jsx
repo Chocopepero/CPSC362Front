@@ -67,10 +67,15 @@ export default function FetchReservation() {
               placeholder="Enter your full name"
             />
           </div>
-          <button type="submit" className="flex items-center justify-center font-bold bg-green-500 text-white p-3 rounded-lg hover:bg-green-700 transition duration-300 w-full">
-            <FontAwesomeIcon icon={faSearch} className="mr-2" />
-            Find My Reservation
-          </button>
+          <div>
+            <input className="Send Reservation ID and Full Name" type="text" formMethod='POST'>
+              <button type="submit" className="flex items-center justify-center font-bold bg-green-500 text-white p-3 rounded-lg hover:bg-green-700 transition duration-300 w-full">
+              <FontAwesomeIcon icon={faSearch} className="mr-2" />
+              Find My Reservation
+              </button>
+            </input>
+          </div>
+          
         </form>
         {error && <p className="text-red-500 mt-4">{error}</p>}
         {reservationDetails && (
