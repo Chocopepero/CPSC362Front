@@ -35,6 +35,7 @@ export default function Header({ loggedin }) {
                     </Link>
                 </div>
             </div>
+            <div className="flex-col">
             <Link to={loggedin ? '/account' : '/login'} className="flex gap-2 border border-gray-300 rounded-full py-2 px-4 items-center">
             <div className="flex-wrap">
                 <FontAwesomeIcon icon={faBars} />
@@ -45,6 +46,8 @@ export default function Header({ loggedin }) {
             </div>
             <p className="text-xs">Account</p>
             </Link>
+            </div>
+            
         </div>
 
         
