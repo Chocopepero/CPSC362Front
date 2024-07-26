@@ -18,7 +18,7 @@ import Footer from './Footer.jsx';
 
 function App() {
   return (
-    <div>
+    <div className="bg-gradient-to-t from-[#afd3e2] to-[#f6f1f1]">
       <Header/>
       <Routes>
       

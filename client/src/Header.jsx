@@ -13,23 +13,23 @@ export default function Header({ loggedin }) {
 
   return (
     <div>
-      <header className="p-4 flex-col bg-blue-500 text-white">
+      <header className="p-4 flex-col bg-gradient-to-t from-[#f6f1f1] to-[#FFDFDF] text-black">
         <div  className="flex items-center">
             <Link to="/" className="flex items-center gap-1">
             <img src={HotelLogo} alt="Hotel Blissful Logo" className="max-w-[100px] max-h-[100px] bg-transparent" />
-            <span className="font-bold text-cl hover:underline">Hotel Blissful</span>
+            <span className="font-bold font-serif text-cl text-amber-800 hover:underline">Hotel Blissful</span>
             </Link>
             <div className="container m-auto">
                 <div className="flex text-lg justify-center gap-40">
-                    <Link to="/amenities" className="flex box-border items-center gap-10 bg-blue-500 hover:scale-110 hover:bg-sky-700 active:border-white">
+                    <Link to="/amenities" className="flex box-border items-center gap-10 hover:scale-110 active:border-white">
                     <FontAwesomeIcon icon={faBellConcierge} />
                     <p>Amenities</p>
                     </Link>
-                    <Link to="/services" className="flex box-border items-center gap-10 bg-blue-500 hover:scale-110 hover:bg-sky-700 active:border-white">
+                    <Link to="/services" className="flex box-border items-center gap-10 hover:scale-110 active:border-white">
                     <FontAwesomeIcon icon={faCircleInfo} />
                     <span>Services & Info</span>
                     </Link>
-                    <Link to="/reservations" className="flex box-border items-center gap-10 bg-blue-500 hover:scale-110 hover:bg-sky-700 active:border-white">
+                    <Link to="/reservations" className="flex box-border items-center gap-10 hover:scale-110 active:border-white">
                     <FontAwesomeIcon icon={faCalendarCheck} />
                     <span>Find Your Reservation</span>
                     </Link>

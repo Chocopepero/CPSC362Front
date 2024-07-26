@@ -23,7 +23,7 @@ export default function Footer() {
 
   return (
     <div className="font-serif">
-      <footer className="p-4 bg-blue-500 text-white flex justify-between items-center">
+      <footer className="p-4 bg-gradient-to-t from-blue-500 to-[#afd3e2] text-white flex justify-between items-center">
         <div className="flex items-center space-x-4">
           <p className="font-bold">Follow us on Socials:</p>
           <img src={facebookLogo} alt="Facebook logo" className="w-10 h-10" />
