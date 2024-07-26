@@ -3,18 +3,18 @@ import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import deluxeImage1 from '../images/DeluxeRoom.webp'; 
-import deluxeImage2 from '../images/DeluxeRoom2.webp'; 
-import deluxeImage3 from '../images/DeluxeRoom3.webp';
-import deluxeImage4 from '../images/DeluxeRoom4.webp';
-import deluxeImage5 from '../images/DeluxeRoom5.webp';
+import stdRoomImg1 from '../images/StandardRoom1.jpg'; 
+import stdRoomImg2 from '../images/StandardRoom2.jpg'; 
+import stdRoomImg3 from '../images/StandardRoom3.jpg';
+import stdRoomImg4 from '../images/StandardRoom4.jpg';
+import stdRoomImg5 from '../images/StandardRoom5.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faWifi } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarXmark } from '@fortawesome/free-regular-svg-icons';
 import { useNavigate } from "react-router-dom";
 import { faCalendarDays, faPerson } from '@fortawesome/free-solid-svg-icons';
 
-export default function DeluxeRoom() {
+export default function StandardRoom() {
     const [openDate, setOpenDate] = useState(false);
     const [date, setDate] = useState([
         {
@@ -73,7 +73,7 @@ export default function DeluxeRoom() {
             return;
         }
         const totalPrice = calculateTotalPrice();
-        navigate("/confirmation", { state: { RoomType: 'Deluxe Room', date, searchPref, totalPrice } });
+        navigate("/confirmation", { state: { RoomType: 'Standard Room', date, searchPref, totalPrice } });
     };
 
     const handleClickOutside = (event) => {
@@ -97,16 +97,16 @@ export default function DeluxeRoom() {
             <div className="bg-white shadow-lg rounded-lg p-6 flex">
                 <div className="w-1/2 pr-4">
                     <div className="grid grid-cols-2 gap-4">
-                        <img src={deluxeImage1} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
-                        <img src={deluxeImage2} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
-                        <img src={deluxeImage3} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
-                        <img src={deluxeImage4} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
-                        <img src={deluxeImage5} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={stdRoomImg1} alt="Standard Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={stdRoomImg2} alt="Standard Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={stdRoomImg3} alt="Standard Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={stdRoomImg4} alt="Standard Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={stdRoomImg5} alt="Standard Room" className="w-full h-32 object-cover rounded-lg" />
                     </div>
                 </div>
                 <div className="w-1/2 pl-4 flex flex-col justify-between">
                     <div>
-                        <h2 className="text-2xl font-semibold mb-4 text-center">Deluxe Room</h2>
+                        <h2 className="text-2xl font-semibold mb-4 text-center">Standard Room</h2>
                         <p className="room-description text-gray-700 mb-4">A spacious room with a beautiful view of the city.</p>
                         <div className="flex items-start justify-start mb-4 flex-col space-y-4">
                             <div className="flex items-center">
@@ -122,12 +122,12 @@ export default function DeluxeRoom() {
                                 <span className="ml-2">Free cancellation two weeks prior</span>
                             </div>
                         </div>
-                        <p className="room-price text-xl font-semibold text-blue-600 mb-5">$200 per night</p>
+                        <p className="room-price text-xl font-semibold text-blue-600 mb-5">$100 per night</p>
                     </div>
                     <div className="py-auto flex flex-col justify-stretch gap-10">
                         <div className="flex items-center gap-2">
                             <FontAwesomeIcon icon={faBed} className="text-lightgray" />
-                            <span className="text-lightgray text-lg">Deluxe Room</span>
+                            <span className="text-lightgray text-lg">Standard Room</span>
                         </div>
                         <div className="flex items-center gap-2 text-lg">
                             <FontAwesomeIcon icon={faCalendarDays} className="text-lightgray" />

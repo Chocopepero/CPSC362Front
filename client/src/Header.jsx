@@ -17,7 +17,7 @@ export default function Header({ loggedin }) {
         <div  className="flex items-center">
             <Link to="/" className="flex items-center gap-1">
             <img src={HotelLogo} alt="Hotel Blissful Logo" className="max-w-[100px] max-h-[100px] bg-transparent" />
-            <span className="font-bold font-serif text-cl text-amber-800 hover:underline">Hotel Blissful</span>
+            <span className="font-bold font-mono italic text-2xl text-amber-800 hover:underline">Hotel Blissful</span>
             </Link>
             <div className="container m-auto">
                 <div className="flex text-lg justify-center gap-40">

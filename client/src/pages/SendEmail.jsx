@@ -25,7 +25,7 @@ export default function SendEmail() {
       axios.post('/api/sendConfirmationEmail', emailData)
         .then(response => {
           console.log('Email sent successfully:', response.data);
-          navigate('/thankYou'); // Redirect to a thank you page after sending email
+          navigate('/confirmation'); // Redirect to a thank you page after sending email
         })
         .catch(error => {
           console.error('Error sending email:', error);

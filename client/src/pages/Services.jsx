@@ -1,6 +1,16 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faClock, faConciergeBell, faSwimmer, faUtensils, faMapMarkerAlt, faInfoCircle, faCrown } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faClock, faConciergeBell, faSwimmer, faUtensils, 
+  faMapMarkerAlt, faInfoCircle, faCrown } from '@fortawesome/free-solid-svg-icons';
+import BreakfastImg from "../images/breakfast.png";
+import KitchenImg from "../images/dining.png";
+import PoolImg from "../images/pool.png";
+import TrolltungaImg from "../images/Trolltunga.jpeg";
+import FolgefonnaImg from "../images/Folgefonna.jpg";
+import VoringfossenImg from "../images/Voringfossen.webp";
+import IceImg from "../images/IceClimbing.jfif";
+import EtiquetteImg from "../images/Etiquette.jfif";
+import TrainImg from "../images/Train.jpg";
 
 
 export default function Services() {
@@ -28,7 +38,7 @@ export default function Services() {
             </li>
           </ul>
         </section>
-        <section className="mb-8">
+        <section className="mb-8 justify-center">
           <h2 className="text-3xl font-semibold text-gray-800 mb-4">Amenities</h2>
           <ul className="list-disc pl-6 text-gray-600">
             <li>
@@ -44,15 +54,15 @@ export default function Services() {
               5-star restaurant recommendations
             </li>
           </ul>
-          <div className="mt-4 space-y-4">
-            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center">
-              <span className="text-gray-500">Image Placeholder</span>
+          <div className="flex flex-col items-center gap-7 mt-4">
+            <div className="bg-gray-300 rounded h-48 w-96 overflow-hidden">
+              <img src={BreakfastImg} alt="Free continental breakfast" className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"/>
             </div>
-            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center">
-              <span className="text-gray-500">Image Placeholder</span>
+            <div className="bg-gray-300 rounded h-48 w-96 overflow-hidden">
+              <img src={KitchenImg} alt="5-star restaurant recommendations" className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"/>
             </div>
-            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center">
-              <span className="text-gray-500">Image Placeholder</span>
+            <div className="bg-gray-300 rounded h-48 w-96 overflow-hidden">
+              <img src={PoolImg} alt="Infinity pool and spa" className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"/>
             </div>
           </div>
         </section>
@@ -94,14 +104,14 @@ export default function Services() {
             </li>
           </ul>
           <div className="mt-4 space-y-4">
-            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center">
-              <span className="text-gray-500">Image Placeholder</span>
+            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center overflow-hidden">
+              <img src={TrolltungaImg} alt="Sights to see 1" className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"/>
             </div>
-            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center">
-              <span className="text-gray-500">Image Placeholder</span>
+            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center overflow-hidden">
+              <img src={FolgefonnaImg} alt="Sights to see 2" className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"/>
             </div>
-            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center">
-              <span className="text-gray-500">Image Placeholder</span>
+            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center overflow-hidden">
+              <img src={VoringfossenImg} alt="Sights to see 3" className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"/>
             </div>
           </div>
         </section>
@@ -126,19 +136,18 @@ export default function Services() {
             </li>
           </ul>
           <div className="mt-4 space-y-4">
-            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center">
-              <span className="text-gray-500">Image Placeholder</span>
+            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center overflow-hidden">
+              <img src={EtiquetteImg} alt="Cultural practice 1" className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"/>
             </div>
-            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center">
-              <span className="text-gray-500">Image Placeholder</span>
+            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center overflow-hidden">
+              <img src={TrainImg} alt="Cultural practice 2" className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"/>
             </div>
-            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center">
-              <span className="text-gray-500">Image Placeholder</span>
+            <div className="bg-gray-300 h-64 w-full rounded flex items-center justify-center overflow-hidden">
+              <img src={IceImg} alt="Cultural practice 3" className="h-full w-full object-cover hover:scale-105 transition-transform duration-300"/>
             </div>
           </div>
         </section>
       </main>
-
     </div>
   );
 }

@@ -3,11 +3,11 @@ import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import deluxeImage1 from '../images/DeluxeRoom.webp'; 
-import deluxeImage2 from '../images/DeluxeRoom2.webp'; 
-import deluxeImage3 from '../images/DeluxeRoom3.webp';
-import deluxeImage4 from '../images/DeluxeRoom4.webp';
-import deluxeImage5 from '../images/DeluxeRoom5.webp';
+import suiteImg1 from '../images/SuiteRoom.webp'; 
+import suiteImg2 from '../images/SuiteRoom2.webp'; 
+import suiteImg3 from '../images/SuiteRoom3.webp';
+import suiteImg4 from '../images/SuiteRoom4.webp';
+import suiteImg5 from '../images/SuiteRoom5.webp';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBed, faWifi } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarXmark } from '@fortawesome/free-regular-svg-icons';
@@ -97,11 +97,11 @@ export default function DeluxeRoom() {
             <div className="bg-white shadow-lg rounded-lg p-6 flex">
                 <div className="w-1/2 pr-4">
                     <div className="grid grid-cols-2 gap-4">
-                        <img src={deluxeImage1} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
-                        <img src={deluxeImage2} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
-                        <img src={deluxeImage3} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
-                        <img src={deluxeImage4} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
-                        <img src={deluxeImage5} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={suiteImg1} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={suiteImg2} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={suiteImg3} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={suiteImg4} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
+                        <img src={suiteImg5} alt="Deluxe Room" className="w-full h-32 object-cover rounded-lg" />
                     </div>
                 </div>
                 <div className="w-1/2 pl-4 flex flex-col justify-between">
@@ -122,7 +122,7 @@ export default function DeluxeRoom() {
                                 <span className="ml-2">Free cancellation two weeks prior</span>
                             </div>
                         </div>
-                        <p className="room-price text-xl font-semibold text-blue-600 mb-5">$200 per night</p>
+                        <p className="room-price text-xl font-semibold text-blue-600 mb-5">$300 per night</p>
                     </div>
                     <div className="py-auto flex flex-col justify-stretch gap-10">
                         <div className="flex items-center gap-2">

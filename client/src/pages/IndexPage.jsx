@@ -101,8 +101,7 @@ export default function IndexPage() {
             <div className="justify-between">
                 <div className="container h-16 bg-[white] border-[3px] border-[solid]
                 border-x-blue-700 border-y-blue-400 flex items-center justify-between 
-                px-0 py-[10px] mx-auto
-                rounded-[5px]  -bottom-[25px] w-full max-w-screen-lg">
+                px-0 py-[10px] mx-auto rounded-2xl  -bottom-[25px] w-full max-w-screen-lg">
                     <div className="flex items-center gap-[10px] text-xs">
                         <FontAwesomeIcon icon={faBed} className="text-[lightgray] pl-2" />
                         <Select
@@ -216,7 +215,7 @@ export default function IndexPage() {
                     </div>
                     <div className="flex items-center gap-[10px] pr-2">
                         <button className="bg-[#1aa7ec] text-white py-[10px] 
-                        px-5 border-white cursor-pointer rounded-full" onClick={handleSearch}>
+                        px-5 border-white cursor-pointer hover:bg-cyan-700 rounded-full" onClick={handleSearch}>
                             Reserve Room
                         </button>
                     </div>
