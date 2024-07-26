@@ -1,12 +1,97 @@
+import React, { useState, useRef, useEffect } from "react";
+import { DateRange } from "react-date-range";
+import { format } from "date-fns";
+import "react-date-range/dist/styles.css"; // main css file
+import "react-date-range/dist/theme/default.css"; // theme css file
 import deluxeImage1 from '../images/DeluxeRoom.webp'; 
 import deluxeImage2 from '../images/DeluxeRoom2.webp'; 
 import deluxeImage3 from '../images/DeluxeRoom3.webp';
 import deluxeImage4 from '../images/DeluxeRoom4.webp';
 import deluxeImage5 from '../images/DeluxeRoom5.webp';
-
-import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBed, faWifi } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarXmark } from '@fortawesome/free-regular-svg-icons';
+import { useNavigate } from "react-router-dom";
+import { faCalendarDays, faPerson } from '@fortawesome/free-solid-svg-icons';
 
 export default function DeluxeRoom() {
+    const [openDate, setOpenDate] = useState(false);
+    const [date, setDate] = useState([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: "selection",
+        },
+    ]);
+    const [openOptions, setOpenOptions] = useState(false);
+    const [searchPref, setPreferenceSearch] = useState({
+        adult: 1,
+        children: 0,
+        room: 1,
+    });
+    const [error, setError] = useState(null);
+
+    const navigate = useNavigate();
+    const dateRangeRef = useRef(null);
+    const optionsRef = useRef(null);
+
+    const handleOption = (name, operation) => {
+        setPreferenceSearch((prev) => ({
+            ...prev,
+            [name]: operation === "i" ? prev[name] + 1 : prev[name] - 1,
+        }));
+    };
+
+    const calculateTotalPrice = () => {
+        const nights = (date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24);
+        const pricePerNight = 200;
+        const totalPrice = nights * pricePerNight * searchPref.room;
+        return totalPrice;
+    };
+
+    const validateInputs = () => {
+        const nights = (date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24);
+        if (nights <= 0) {
+            return "Please select at least one night.";
+        }
+        if (searchPref.adult < 1) {
+            return "At least one adult must be selected.";
+        }
+        if (searchPref.children < 0) {
+            return "Number of children cannot be negative.";
+        }
+        if (searchPref.room < 1) {
+            return "At least one room must be selected.";
+        }
+        return null;
+    };
+
+    const handleSearch = () => {
+        const validationError = validateInputs();
+        if (validationError) {
+            setError(validationError);
+            return;
+        }
+        const totalPrice = calculateTotalPrice();
+        navigate("/confirmation", { state: { RoomType: 'Deluxe Room', date, searchPref, totalPrice } });
+    };
+
+    const handleClickOutside = (event) => {
+        if (dateRangeRef.current && !dateRangeRef.current.contains(event.target)) {
+            setOpenDate(false);
+        }
+        if (optionsRef.current && !optionsRef.current.contains(event.target)) {
+            setOpenOptions(false);
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
         <div className="max-w-6xl mx-auto p-6">
             <div className="bg-white shadow-lg rounded-lg p-6 flex">
@@ -25,29 +110,123 @@ export default function DeluxeRoom() {
                         <p className="room-description text-gray-700 mb-4">A spacious room with a beautiful view of the city.</p>
                         <div className="flex items-start justify-start mb-4 flex-col space-y-4">
                             <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                                </svg>
+                                <FontAwesomeIcon icon={faBed} className="h-6 w-6 text-gray-600" />
                                 <span className="ml-2">3 Rooms</span>
                             </div>
                             <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.288 15.038a5.25 5.25 0 0 1 7.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12.53 18.22l-.53.53-.53-.53a.75.75 0 0 1 1.06 0Z" />
-                                </svg>
+                                <FontAwesomeIcon icon={faWifi} className="h-6 w-6 text-gray-600" />
                                 <span className="ml-2">Free WiFi</span>
                             </div>
                             <div className="flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
-                                </svg>
+                                <FontAwesomeIcon icon={faCalendarXmark} className="h-6 w-6 text-gray-600" />
                                 <span className="ml-2">Free cancellation two weeks prior</span>
                             </div>
                         </div>
-                        <p className="room-price text-xl font-semibold text-blue-600 mb-4">$200 per night</p>
+                        <p className="room-price text-xl font-semibold text-blue-600 mb-5">$200 per night</p>
                     </div>
-                    <button className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-300">
-                        Book Now
-                    </button>
+                    <div className="py-auto flex flex-col justify-stretch gap-10">
+                        <div className="flex items-center gap-2">
+                            <FontAwesomeIcon icon={faBed} className="text-lightgray" />
+                            <span className="text-lightgray text-lg">Deluxe Room</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-lg">
+                            <FontAwesomeIcon icon={faCalendarDays} className="text-lightgray" />
+                            <span
+                                onClick={() => setOpenDate(!openDate)}
+                                className="text-lightgray cursor-pointer"
+                            >
+                                {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(date[0].endDate, "MM/dd/yyyy")}`}
+                            </span>
+                            {openDate && (
+                                <div ref={dateRangeRef} className="absolute ml-60 z-40">
+                                    <DateRange
+                                        editableDateInputs
+                                        onChange={(item) => setDate([item.selection])}
+                                        moveRangeOnFirstSelection={false}
+                                        ranges={date}
+                                        className="date"
+                                        minDate={new Date()}
+                                    />
+                                </div>
+                            )}
+                        </div>
+                        <div className="flex items-center gap-2 text-lg">
+                            <FontAwesomeIcon icon={faPerson} className="text-lightgray" />
+                            <span
+                                onClick={() => setOpenOptions(!openOptions)}
+                                className="text-lightgray cursor-pointer"
+                            >
+                                {`${searchPref.adult} adult · ${searchPref.children} children · ${searchPref.room} room`}
+                            </span>
+                            {openOptions && (
+                                <div ref={optionsRef} className="absolute ml-60 z-40 bg-white text-gray rounded-5 shadow-lg">
+                                    <div className="w-48 flex justify-between m-2">
+                                        <span className="optionText">Adult</span>
+                                        <div className="flex items-center gap-2 text-xs text-black">
+                                            <button
+                                                disabled={searchPref.adult <= 1}
+                                                className="w-8 h-8 border border-solid border-blue-700 text-blue-700 shadow-lg rounded-b-md cursor-pointer bg-white"
+                                                onClick={() => handleOption("adult", "d")}
+                                            >
+                                                -
+                                            </button>
+                                            <span className="optionCounterNumber">{searchPref.adult}</span>
+                                            <button
+                                                className="w-8 h-8 border border-solid border-blue-700 text-blue-700 shadow-lg rounded-t-md cursor-pointer bg-white"
+                                                onClick={() => handleOption("adult", "i")}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="w-48 flex justify-between m-2">
+                                        <span className="optionText">Children</span>
+                                        <div className="flex items-center gap-2 text-xs text-black">
+                                            <button
+                                                disabled={searchPref.children <= 0}
+                                                className="w-8 h-8 border border-solid border-blue-700 text-blue-700 shadow-lg rounded-b-md cursor-pointer bg-white"
+                                                onClick={() => handleOption("children", "d")}
+                                            >
+                                                -
+                                            </button>
+                                            <span className="optionCounterNumber">{searchPref.children}</span>
+                                            <button
+                                                className="w-8 h-8 border border-solid border-blue-700 text-blue-700 shadow-lg rounded-t-md cursor-pointer bg-white"
+                                                onClick={() => handleOption("children", "i")}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="w-48 flex justify-between m-2">
+                                        <span className="optionText">Room</span>
+                                        <div className="flex items-center gap-2 text-xs text-black">
+                                            <button
+                                                disabled={searchPref.room <= 1}
+                                                className="w-8 h-8 border border-solid border-blue-700 text-blue-700 shadow-lg rounded-b-md cursor-pointer bg-white"
+                                                onClick={() => handleOption("room", "d")}
+                                            >
+                                                -
+                                            </button>
+                                            <span className="optionCounterNumber">{searchPref.room}</span>
+                                            <button
+                                                className="w-8 h-8 border border-solid border-blue-700 text-blue-700 shadow-lg rounded-t-md cursor-pointer bg-white"
+                                                onClick={() => handleOption("room", "i")}
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                        {error && <div className="text-red-600">{error}</div>}
+                        <div className="flex items-center gap-2 pr-2">
+                            <button className="bg-blue-600 text-white py-2 px-5 border-white cursor-pointer rounded-full" onClick={handleSearch}>
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

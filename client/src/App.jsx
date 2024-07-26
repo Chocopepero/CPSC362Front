@@ -18,10 +18,14 @@ import Footer from './Footer.jsx';
 
 function App() {
   return (
-    <div className="bg-gradient-to-t from-[#afd3e2] to-[#f6f1f1]">
-      <Header/>
-      <Routes>
-      
+    <div className="bg-gradient-to-t from-[#afd3e2] to-[#FFDFDF]
+          flex flex-col min-h-screen">
+      <div className="bg-lightcyan min-h-[50px]">
+        <Header/>
+      </div>
+      <div className="flex-1">
+        <Routes>
+        
         <Route path="/" element={<Layout />} />
         <Route index element={<IndexPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -36,8 +40,13 @@ function App() {
         <Route path="/reservations" element={<FindReservation />} />
         <Route path="/confirmation" element={<Confirmation />} />
       
-      </Routes>
-      <Footer/>
+        </Routes>
+      </div>
+      
+      <div className="bg-papayawhip min-h-[50px]">
+        <Footer/>
+      </div>
+      
     </div>
   );
 }
