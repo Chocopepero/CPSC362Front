@@ -12,6 +12,7 @@ import PaymentPage from './pages/PaymentPage';
 import AccountPage from './pages/AccountPage.jsx';
 import Services from "./pages/Services.jsx";
 import FindReservation from "./pages/FindReservation.jsx";
+import Confirmation from "./pages/Confirmation.jsx";
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 
@@ -33,6 +34,7 @@ function App() {
         <Route path="/services" element={<Services />} />
         <Route path="/amenities" element={<Services />} />
         <Route path="/reservations" element={<FindReservation />} />
+        <Route path="/confirmation" element={<Confirmation />} />
       
       </Routes>
       <Footer/>
