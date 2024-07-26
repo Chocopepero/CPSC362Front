@@ -1,6 +1,6 @@
 import React from 'react';
 import { format } from "date-fns";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import img1 from "../images/Hotelpic1.jpeg";
 import img2 from "../images/DeluxeRoom.webp";
 import img3 from "../images/Hotelpic3.webp";
@@ -35,6 +35,7 @@ const rooms = [
 
 export default function Confirmation() {
     const { state } = useLocation();
+    const navigate = useNavigate();
     const { RoomType, date, searchPref } = state;
 
     // Find the room details based on the selected RoomType
@@ -43,6 +44,10 @@ export default function Confirmation() {
     // Calculate the total cost
     const nights = Math.ceil((date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24));
     const totalCost = selectedRoom ? selectedRoom.price * searchPref.room * nights : 0;
+
+    const handleConfirmBooking = () => {
+        navigate('/sendEmail', { state: { RoomType, date, searchPref, totalCost } });
+    };
 
     return (
         <div className="p-4 flex-col">
@@ -75,7 +80,7 @@ export default function Confirmation() {
                             <p className="text-gray-600">$ {totalCost.toFixed(2)}</p>
                         </div>
 
-                        <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4">
+                        <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4" onClick={handleConfirmBooking}>
                             Confirm Booking
                         </button>
                     </div>
