@@ -23,9 +23,9 @@ export default function Header() {
           </Link>
           <div className="container m-auto">
             <div className="flex text-lg justify-center text-center gap-40">
-              <Link to="/amenities" className="flex box-border items-center gap-10 hover:scale-110 active:border-white">
+              <Link to="/amenities" className="flex box-border items-center gap-10 pt-1 hover:scale-110 active:border-white">
                 <FontAwesomeIcon icon={faBellConcierge} />
-                <p>Amenities</p>
+                <p className="pt-2">Amenities</p>
               </Link>
               <Link to="/services" className="flex box-border items-center gap-10 hover:scale-110 active:border-white">
                 <FontAwesomeIcon icon={faCircleInfo} />
@@ -46,13 +46,13 @@ export default function Header() {
                 <FontAwesomeIcon icon={faBars} />
               </div>
               <div className="flex flex-col items-center">
-                <p className="text-xs">Login/Register</p>
+                <p className="text-xs pt-3">Login/Register</p>
               </div>
               <div className="flex flex-col items-center bg-gray-500 text-white rounded-full border border-gray-500 p-1 overflow-hidden">
                 <FontAwesomeIcon icon={faUser} />
               </div>
               <div className="flex flex-col items-center">
-                <p className="text-xs">Account</p>
+                <p className="text-xs pt-3">Account</p>
               </div>
             </Link>
           </div>
