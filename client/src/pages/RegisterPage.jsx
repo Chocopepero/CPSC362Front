@@ -57,7 +57,7 @@ export default function RegisterPage() {
       return;
     }
 
-    axios.post('/api/createaccount', {
+    axios.post('/api/create', {
       username,
       password,
       email,

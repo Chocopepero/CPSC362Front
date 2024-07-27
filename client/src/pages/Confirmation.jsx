@@ -63,7 +63,7 @@ export default function Confirmation() {
         };
 
         try {
-            const response = await axios.post('http://localhost:18080/reserve', reservationData);
+            const response = await axios.post('/api/reserve', reservationData);
             if (response.status === 200) {
                 alert('Reservation successful!');
                 navigate('/sendEmail', { state: { RoomType, date, searchPref, totalCost } });

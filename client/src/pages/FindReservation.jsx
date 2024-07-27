@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import { isAfter, parse } from 'date-fns';
 
 export default function FetchReservation() {
   const [reservationID, setReservationID] = useState('');
@@ -14,19 +16,34 @@ export default function FetchReservation() {
     setError('');
     setReservationDetails(null);
 
-    // Simulate API call
     try {
-      // Mock API response
-      const reservationInq = {
-        id: reservationID,
-        name: fullName,
-        roomNumber: 101,
-        checkIn: '2024-08-01',
-        checkOut: '2024-08-05'
-      };
+      const response = await axios.get(`/api/lookup?id=${reservationID}`);
+      if (response.status === 200) {
+        const reservation = JSON.parse(response.data);
+        // Check if the name matches
+        if (reservation._primary_guest._name.toLowerCase() === fullName.toLowerCase()) {
+          const departureDate = parse(
+            `${reservation._departure._year}-${reservation._departure._month}-${reservation._departure._day}`,
+            'yyyy-MM-dd',
+            new Date()
+          );
 
-      if (reservationID === '12345' && fullName === 'John Doe') {
-        setReservationDetails(reservationInq);
+          const fulfillmentStatus = isAfter(new Date(), departureDate);
+
+          setReservationDetails({
+            id: reservation._reservation_id,
+            name: reservation._primary_guest._name,
+            phone: reservation._primary_guest._phone_number,
+            numOfAdults: reservation._num_of_adults,
+            numOfChildren: reservation._num_of_children,
+            numOfRooms: reservation._num_of_rooms,
+            arrivalDate: `${reservation._arrival._month}/${reservation._arrival._day}/${reservation._arrival._year}`,
+            departureDate: `${reservation._departure._month}/${reservation._departure._day}/${reservation._departure._year}`,
+            fulfillmentStatus,
+          });
+        } else {
+          setError('Name does not match with the reservation ID.');
+        }
       } else {
         setError('Reservation not found. Please check your details.');
       }
@@ -67,15 +84,10 @@ export default function FetchReservation() {
               placeholder="Enter your full name"
             />
           </div>
-          <div>
-            <input className="Send Reservation ID and Full Name" type="text" formMethod='POST'>
-              <button type="submit" className="flex items-center justify-center font-bold bg-green-500 text-white p-3 rounded-lg hover:bg-green-700 transition duration-300 w-full">
-              <FontAwesomeIcon icon={faSearch} className="mr-2" />
-              Find My Reservation
-              </button>
-            </input>
-          </div>
-          
+          <button type="submit" className="flex items-center justify-center font-bold bg-gray-400 text-white p-3 rounded-lg hover:bg-green-700 transition duration-300 w-full">
+            <FontAwesomeIcon icon={faSearch} className="mr-2" />
+            Find My Reservation
+          </button>
         </form>
         {error && <p className="text-red-500 mt-4">{error}</p>}
         {reservationDetails && (
@@ -83,9 +95,13 @@ export default function FetchReservation() {
             <h3 className="text-xl font-semibold text-gray-700 mb-4">Reservation Details</h3>
             <p><strong>ID:</strong> {reservationDetails.id}</p>
             <p><strong>Name:</strong> {reservationDetails.name}</p>
-            <p><strong>Room Number:</strong> {reservationDetails.roomNumber}</p>
-            <p><strong>Check-In:</strong> {reservationDetails.checkIn}</p>
-            <p><strong>Check-Out:</strong> {reservationDetails.checkOut}</p>
+            <p><strong>Phone:</strong> {reservationDetails.phone}</p>
+            <p><strong>Number of Adults:</strong> {reservationDetails.numOfAdults}</p>
+            <p><strong>Number of Children:</strong> {reservationDetails.numOfChildren}</p>
+            <p><strong>Number of Rooms:</strong> {reservationDetails.numOfRooms}</p>
+            <p><strong>Arrival Date:</strong> {reservationDetails.arrivalDate}</p>
+            <p><strong>Departure Date:</strong> {reservationDetails.departureDate}</p>
+            <p><strong>Fulfillment Status:</strong> {reservationDetails.fulfillmentStatus ? 'Fulfilled' : 'Not Fulfilled'}</p>
           </div>
         )}
       </main>
