@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { format } from "date-fns";
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { MDBInput, MDBBtn } from 'mdb-react-ui-kit';
 import img1 from "../images/Hotelpic1.jpeg";
 import img2 from "../images/DeluxeRoom.webp";
 import img3 from "../images/Hotelpic3.webp";
@@ -38,6 +40,9 @@ export default function Confirmation() {
     const navigate = useNavigate();
     const { RoomType, date, searchPref } = state;
 
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+
     // Find the room details based on the selected RoomType
     const selectedRoom = rooms.find(room => room.name === RoomType);
 
@@ -45,8 +50,29 @@ export default function Confirmation() {
     const nights = Math.ceil((date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24));
     const totalCost = selectedRoom ? selectedRoom.price * searchPref.room * nights : 0;
 
-    const handleConfirmBooking = () => {
-        navigate('/sendEmail', { state: { RoomType, date, searchPref, totalCost } });
+    const handleConfirmBooking = async () => {
+        const reservationData = {
+            name: name,
+            phone: phone,
+            numAdults: searchPref.adult,
+            numChildren: searchPref.children,
+            numberRooms: searchPref.room,
+            roomType: RoomType,
+            arrivalDate: format(date[0].startDate, "yyyy-MM-dd"),
+            departureDate: format(date[0].endDate, "yyyy-MM-dd")
+        };
+
+        try {
+            const response = await axios.post('http://localhost:18080/reserve', reservationData);
+            if (response.status === 200) {
+                alert('Reservation successful!');
+                navigate('/sendEmail', { state: { RoomType, date, searchPref, totalCost } });
+            } else {
+                alert('Failed to create reservation');
+            }
+        } catch (error) {
+            alert('Error: ' + error.message);
+        }
     };
 
     return (
@@ -80,9 +106,17 @@ export default function Confirmation() {
                             <p className="text-gray-600">$ {totalCost.toFixed(2)}</p>
                         </div>
 
-                        <button className="bg-blue-500 text-white py-2 px-4 rounded mt-4" onClick={handleConfirmBooking}>
+                        <div className="mb-4">
+                            <MDBInput label="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                        </div>
+
+                        <div className="mb-4">
+                            <MDBInput label="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                        </div>
+
+                        <MDBBtn color="primary" onClick={handleConfirmBooking}>
                             Confirm Booking
-                        </button>
+                        </MDBBtn>
                     </div>
                 </div>
             </div>

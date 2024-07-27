@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import CheckInImg from '../images/checkin.jpg';
 import BackgroundLogin from '../images/auroraScenic.jpg';
@@ -15,11 +15,14 @@ import {
   MDBCheckbox
 } from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import AuthContext from '../assets/components/Authenticate'; 
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
+    const { login } = useContext(AuthContext); 
+    const navigate = useNavigate();
 
     function validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -43,7 +46,13 @@ export default function LoginPage() {
         })
         .then(response => {
             console.log(response.data);
-            // Redirect or handle successful login
+            if (response.status === 200) {
+                const { name } = response.data;
+                login({ email, name }); // Set the user session with name
+                navigate('/'); 
+            } else {
+                setError('Login failed');
+            }
         })
         .catch(error => {
             if (error.response) {
