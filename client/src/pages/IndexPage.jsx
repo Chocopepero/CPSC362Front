@@ -232,11 +232,11 @@ export default function IndexPage() {
                         {rooms.map(room => (
                             <div key={room.id} className="border rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105">
                                 <img src={room.imageUrl} alt={room.name} className="w-full h-48 object-cover" />
-                                <div className="p-4">
+                                <div className="p-4 gap-4">
                                     <h3 className="text-xl font-bold">{room.name}</h3>
                                     <p className="mt-2 text-gray-600">{room.description}</p>
                                     <p className="mt-2 font-bold">{room.price}</p>
-                                    <Link to={room.link} className="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded">
+                                    <Link to={room.link} className="relative bottom-0 left-0 inline-block bg-blue-500 text-white py-2 px-4 rounded">
                                         View More
                                     </Link>
                                 </div>

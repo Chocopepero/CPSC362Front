@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import AuthContext  from '../assets/components/Authenticate';
+import { useLocation } from 'react-router-dom';
+import AuthContext from '../assets/components/AuthContext';
 import { MDBInput, MDBBtn } from 'mdb-react-ui-kit';
 
 export default function AccountPage() {
@@ -10,18 +11,23 @@ export default function AccountPage() {
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [reservationId, setReservationId] = useState('');
+  const location = useLocation();
+  const email = location.state?.email;
 
   useEffect(() => {
-    if (user) {
-      axios.get('/api/user')
+    console.log('Email from state:', email);  // Debugging statement
+    if (email) {
+      axios.get('/api/user', { params: { email } })
         .then(response => {
           setUserDetails(response.data);
         })
         .catch(error => {
           console.error('Error fetching user details:', error);
         });
+    } else {
+      console.error('Email not found in location state');
     }
-  }, [user]);
+  }, [email]);
 
   const handleUpdateUsername = () => {
     axios.post('/api/update-username', { username: newUsername })

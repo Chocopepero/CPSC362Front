@@ -28,7 +28,8 @@ const userSchema = new mongoose.Schema({
     state: String,
     postal_code: String,
     country: String
-  }
+  },
+  reservations: [mongoose.Schema.Types.ObjectId]
 }, { collection: 'User_Account' });
 
 const reservationSchema = new mongoose.Schema({
@@ -109,6 +110,47 @@ app.post('/api/reserve', async (req, res) => {
   }
 });
 
+app.post('/api/update-name', async (req, res) => {
+  const { email, name } = req.body;
+  try {
+    await User.updateOne({ email }, { name });
+    res.status(200).json({ message: 'Name updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred. Please try again.' });
+  }
+});
+
+app.post('/api/update-email', async (req, res) => {
+  const { oldEmail, newEmail } = req.body;
+  try {
+    await User.updateOne({ email: oldEmail }, { email: newEmail });
+    res.status(200).json({ message: 'Email updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred. Please try again.' });
+  }
+});
+
+app.post('/api/update-password', async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    await User.updateOne({ email }, { password: hashedPassword });
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred. Please try again.' });
+  }
+});
+
+app.post('/api/cancel-reservation', async (req, res) => {
+  const { reservationId } = req.body;
+  try {
+    await Reservation.deleteOne({ _id: reservationId });
+    res.status(200).json({ message: 'Reservation cancelled successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred. Please try again.' });
+  }
+});
+
 app.get('/api/user', async (req, res) => {
   const { email } = req.query;
   try {
@@ -149,6 +191,16 @@ app.get('/api/lookup', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'An error occurred. Please try again.' });
   }
+});
+
+app.post('/api/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) {
+      return res.status(500).json({ error: 'Failed to log out.' });
+    }
+    res.clearCookie('connect.sid');
+    res.status(200).json({ message: 'Logged out successfully.' });
+  });
 });
 
 app.listen(port, () => {
