@@ -1,0 +1,90 @@
+[{
+  "_id": {
+    "$oid": "66a5a64e76507e1b0e426b91"
+  },
+  "name": "Kim",
+  "phone": "1111",
+  "numAdults": 4,
+  "numChildren": 0,
+  "numberRooms": 1,
+  "roomType": "Standard Room",
+  "arrivalDate": "2024-07-27",
+  "departureDate": "2024-07-31",
+  "totalCost": 400,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a5a6f976507e1b0e426b93"
+  },
+  "name": "Harry",
+  "phone": "123456",
+  "numAdults": 1,
+  "numChildren": 2,
+  "numberRooms": 1,
+  "roomType": "Standard Room",
+  "arrivalDate": "2024-07-31",
+  "departureDate": "2024-08-09",
+  "totalCost": 900,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a5a7de76507e1b0e426b97"
+  },
+  "name": "Hello",
+  "phone": "401040404",
+  "numAdults": 3,
+  "numChildren": 0,
+  "numberRooms": 1,
+  "roomType": "Standard Room",
+  "arrivalDate": "2024-07-27",
+  "departureDate": "2024-07-31",
+  "totalCost": 400,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a5a9db76507e1b0e426b99"
+  },
+  "name": "Hello",
+  "phone": "123456",
+  "numAdults": 3,
+  "numChildren": 0,
+  "numberRooms": 1,
+  "roomType": "Standard Room",
+  "arrivalDate": "2024-07-30",
+  "departureDate": "2024-07-31",
+  "totalCost": 100,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a5a9f4857ba247561cf4f4"
+  },
+  "name": "Hi",
+  "phone": "7777",
+  "numAdults": 1,
+  "numChildren": 0,
+  "numberRooms": 1,
+  "roomType": "Deluxe Room",
+  "arrivalDate": "2024-07-29",
+  "departureDate": "2024-07-30",
+  "totalCost": 200,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a5e484a375f8d28e5bf389"
+  },
+  "name": "Daniel",
+  "phone": "123456",
+  "numAdults": 3,
+  "numChildren": 0,
+  "numberRooms": 1,
+  "roomType": "Standard Room",
+  "arrivalDate": "2024-07-31",
+  "departureDate": "2024-08-09",
+  "totalCost": 900,
+  "__v": 0
+}]
