@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { format } from "date-fns";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -37,6 +37,18 @@ const rooms = [
 export default function Confirmation() {
     const { state } = useLocation();
     const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (!state || !state.date) {
+            navigate('/', { state: { message: 'Please choose room, date and number of guests preference first before confirming.' } });
+        }
+    }, [state, navigate]);
+
+    if (!state || !state.date) {
+        return null; // This will render nothing as the redirection happens
+    }
+
     const { RoomType, date, searchPref } = state;
 
     const [name, setName] = useState('');
