@@ -12,6 +12,9 @@ import "./index.css";
 export default function Header() {
   const { user, logout } = useContext(AuthContext);
 
+  console.log("Rendering Header component"); // Debug statement
+  console.log("User context:", user, user?.email); // Debug statement
+
   return (
     <div>
       <header className="p-4 flex-col bg-gradient-to-t from-[#f6f1f1] to-[#FFDFDF] text-black">

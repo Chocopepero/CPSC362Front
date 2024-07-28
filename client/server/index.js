@@ -111,10 +111,14 @@ app.post('/api/reserve', async (req, res) => {
 });
 
 app.post('/api/update-name', async (req, res) => {
-  const { email, name } = req.body;
+  const { email, newName } = req.body;
   try {
-    await User.updateOne({ email }, { name });
-    res.status(200).json({ message: 'Name updated successfully' });
+    const result = await User.updateOne({ email }, { $set: { name: newName } });
+    if (result.nModified > 0) {
+      res.status(200).json({ message: 'Name updated successfully' });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
   } catch (err) {
     res.status(500).json({ error: 'An error occurred. Please try again.' });
   }
@@ -123,8 +127,12 @@ app.post('/api/update-name', async (req, res) => {
 app.post('/api/update-email', async (req, res) => {
   const { oldEmail, newEmail } = req.body;
   try {
-    await User.updateOne({ email: oldEmail }, { email: newEmail });
-    res.status(200).json({ message: 'Email updated successfully' });
+    const result = await User.updateOne({ email: oldEmail }, { $set: { email: newEmail } });
+    if (result.nModified > 0) {
+      res.status(200).json({ message: 'Email updated successfully' });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
   } catch (err) {
     res.status(500).json({ error: 'An error occurred. Please try again.' });
   }
@@ -134,8 +142,12 @@ app.post('/api/update-password', async (req, res) => {
   const { email, password } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    await User.updateOne({ email }, { password: hashedPassword });
-    res.status(200).json({ message: 'Password updated successfully' });
+    const result = await User.updateOne({ email }, { $set: { password: hashedPassword } });
+    if (result.nModified > 0) {
+      res.status(200).json({ message: 'Password updated successfully' });
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
   } catch (err) {
     res.status(500).json({ error: 'An error occurred. Please try again.' });
   }
