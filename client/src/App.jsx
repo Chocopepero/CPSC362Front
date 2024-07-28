@@ -1,5 +1,4 @@
-// src/App.jsx
-import './App.css'
+import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import Layout from './Layout';
 import RegisterPage from './pages/RegisterPage';
@@ -15,13 +14,12 @@ import FindReservation from "./pages/FindReservation.jsx";
 import Confirmation from "./pages/Confirmation.jsx";
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
-import { AuthProvider } from './assets/components/Authenticate.jsx'; 
+import { AuthProvider } from './assets/components/AuthContext'; 
 
 function App() {
   return (
     <AuthProvider>
-      <div className="bg-gradient-to-t from-[#afd3e2] to-[#FFDFDF]
-            flex flex-col min-h-screen">
+      <div className="bg-gradient-to-t from-[#afd3e2] to-[#FFDFDF] flex flex-col min-h-screen">
         <div className="bg-lightcyan min-h-[50px]">
           <Header/>
         </div>

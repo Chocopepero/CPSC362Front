@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import EtiquetteBG from '../images/Train.jpg';
 import axios from 'axios';
 import {
@@ -13,7 +13,6 @@ import {
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 export default function RegisterPage() {
-  const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone_num, setPhoneNum] = useState('');
@@ -21,6 +20,7 @@ export default function RegisterPage() {
   const [repeatPassword, setRepeatPassword] = useState('');
   const [error, setError] = useState(null);
   const [serverError, setServerError] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   function validateEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -32,12 +32,12 @@ export default function RegisterPage() {
     return re.test(phone);
   }
 
-  function registerUser(ev) {
+  async function registerUser(ev) {
     ev.preventDefault();
     setError(null);
     setServerError(null);
 
-    if (!username || !name || !email || !phone_num || !password || !repeatPassword) {
+    if (!name || !email || !phone_num || !password || !repeatPassword) {
       setError('All fields are required.');
       return;
     }
@@ -57,24 +57,31 @@ export default function RegisterPage() {
       return;
     }
 
-    axios.post('/api/create', {
-      username,
-      password,
-      email,
-      name,
-      phone_num
-    })
-    .then(response => {
+    try {
+      const response = await axios.post('/api/register', {
+        name,
+        email,
+        password,
+        phone: phone_num,
+        address: {
+          street_name: 'Default Street', // Modify this as per your form inputs
+          city: 'Default City', // Modify this as per your form inputs
+          state: 'Default State', // Modify this as per your form inputs
+          postal_code: '12345', // Modify this as per your form inputs
+          country: 'Default Country' // Modify this as per your form inputs
+        }
+      });
       console.log(response.data);
-    })
-    .catch(error => {
+      alert('Registration successful!');
+      navigate('/'); // Redirect to home page upon successful registration
+    } catch (error) {
       if (error.response && error.response.data && error.response.data.error) {
         setServerError(error.response.data.error);
       } else {
         setServerError('An error occurred. Please try again.');
       }
       console.error(error);
-    });
+    }
   }
 
   return (
@@ -84,16 +91,6 @@ export default function RegisterPage() {
         <MDBCardBody className='px-5'>
           <h2 className="text-primary text-uppercase text-center mb-5">Create an account</h2>
           <form onSubmit={registerUser}>
-            <MDBInput 
-              wrapperClass='mb-4' 
-              label='Username' 
-              size='lg' 
-              id='form0' 
-              type='text' 
-              value={username}
-              onChange={ev => setUsername(ev.target.value)}
-              required
-            />
             <MDBInput 
               wrapperClass='mb-4' 
               label='Your Name' 

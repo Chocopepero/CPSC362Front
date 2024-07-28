@@ -1,17 +1,16 @@
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
-import React, { useContext } from "react";
-import AuthContext from './assets/components/Authenticate'; 
+import AuthContext from './assets/components/AuthContext';
 import HotelLogo from "./images/HotelLogo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faUser } from "@fortawesome/free-regular-svg-icons";
 import { faBars, faBellConcierge, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import "./index.css";
 
 export default function Header() {
-  const { user } = useContext(AuthContext); 
+  const { user } = useContext(AuthContext);
 
   return (
     <div>
@@ -37,7 +36,7 @@ export default function Header() {
               </Link>
             </div>
           </div>
-          <div className="flex-col items-center">
+          <div className="flex flex-col items-center">
             {user && (
               <p className="text-center mb-2">Hi, {user.name}</p>
             )}

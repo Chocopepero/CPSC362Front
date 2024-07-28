@@ -1,43 +1,44 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import AuthContext from './AuthContext.jsx';
 
-const AuthContext = createContext();
-
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    // Load the user from localStorage if available
-    const userFromStorage = localStorage.getItem('user');
-    return userFromStorage ? JSON.parse(userFromStorage) : null;
-  });
-
-  const login = (userData) => {
-    setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
-  };
-
-  const logout = () => {
-    setUser(null);
-    localStorage.removeItem('user');
-  };
+const Authenticate = ({ email }) => {
+  const { setUser } = useContext(AuthContext);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // This is to handle the case when the user clears the storage manually
-    const handleStorageChange = () => {
-      const userFromStorage = localStorage.getItem('user');
-      setUser(userFromStorage ? JSON.parse(userFromStorage) : null);
+    const fetchUserData = async () => {
+      if (!email) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/user?email=${email}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data');
+        }
+        const data = await response.json();
+        setUser(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    fetchUserData();
+  }, [email, setUser]);
 
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!user) return <p>No user data</p>;
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
-    </AuthContext.Provider>
+    <div>
+      <p>Welcome, {user.name}</p>
+    </div>
   );
 };
 
-export default AuthContext;
+export default Authenticate;

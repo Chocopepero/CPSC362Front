@@ -11,3 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </BrowserRouter>
   </React.StrictMode>,
 )
+// Add popstate event listener
+window.addEventListener('popstate', () => {
+  window.location.reload();
+});
