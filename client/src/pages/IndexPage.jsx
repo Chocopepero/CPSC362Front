@@ -1,19 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import img1 from "../images/Hotelpic1.jpeg";
 import img2 from "../images/DeluxeRoom.webp";
 import img3 from "../images/Hotelpic3.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
-import { faBed, faPerson } from "@fortawesome/free-solid-svg-icons";
+import { faBed, faCircleXmark, faPerson } from "@fortawesome/free-solid-svg-icons";
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
-import "react-date-range/dist/styles.css"; // main css file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import Select from 'react-select';
 
 export default function IndexPage() {
-    // room data
     const rooms = [
         {
             id: 1,
@@ -63,7 +62,10 @@ export default function IndexPage() {
     });
 
     const navigate = useNavigate();
-    
+    const location = useLocation();
+    const message = location.state?.message;
+    const [showMessage, setShowMessage] = useState(true);
+
     const dateRangeRef = useRef(null);
     const optionsRef = useRef(null);
 
@@ -98,12 +100,23 @@ export default function IndexPage() {
 
     return (
         <div className="p-4 flex-col">
-            <div className="justify-between">
-                <div className="container h-16 bg-[white] border-[3px] border-[solid]
-                border-x-blue-700 border-y-blue-400 flex items-center justify-between 
-                px-0 py-[10px] mx-auto rounded-2xl  -bottom-[25px] w-full max-w-screen-lg">
-                    <div className="flex items-center gap-[10px] text-xs">
-                        <FontAwesomeIcon icon={faBed} className="text-[lightgray] pl-2" />
+            {message && showMessage && (
+                <div className="container mx-auto p-8">
+                    <div className="max-w-md mx-auto p-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <button
+                            onClick={() => setShowMessage(false)}
+                            className="absolute top-0 right-0 px-4 py-3"
+                        >
+                            <FontAwesomeIcon icon={faCircleXmark}/>
+                        </button>
+                        <span className="block sm:inline">{message}</span>
+                    </div>
+                </div>
+            )}
+            <div className="reserve_bar flex justify-center mb-5">
+                <div className="container max-w-4xl bg-white border-3 border-solid border-x-blue-700 border-y-blue-400 flex items-center justify-between px-0 py-2 mx-auto rounded-2xl">
+                    <div className="flex items-center gap-2 text-xs">
+                        <FontAwesomeIcon icon={faBed} className="text-gray-400 pl-2" />
                         <Select
                             options={options}
                             onChange={(selectedOption) => setRoomType(selectedOption ? selectedOption.label : "")}
@@ -114,11 +127,11 @@ export default function IndexPage() {
                             className="w-48"
                         />
                     </div>
-                    <div className="flex items-center gap-[10px]">
-                        <FontAwesomeIcon icon={faCalendarDays} className="text-[lightgray]" />
+                    <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faCalendarDays} className="text-gray-400" />
                         <span
                             onClick={() => setOpenDate(!openDate)}
-                            className=" text-[lightgray] cursor-pointer"
+                            className="text-gray-400 cursor-pointer"
                         >{`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
                         {openDate && (
                             <div ref={dateRangeRef} className="absolute top-40 z-40">
@@ -133,77 +146,65 @@ export default function IndexPage() {
                             </div>
                         )}
                     </div>
-                    <div className="flex items-center gap-[10px]">
-                        <FontAwesomeIcon icon={faPerson} className="text-[lightgray]" />
+                    <div className="flex items-center gap-2">
+                        <FontAwesomeIcon icon={faPerson} className="text-gray-400" />
                         <span
                             onClick={() => setOpenOptions(!openOptions)}
-                            className="text-[lightgray] cursor-pointer"
+                            className="text-gray-400 cursor-pointer"
                         >{`${searchPref.adult} adult · ${searchPref.children} children · ${searchPref.room} room`}</span>
                         {openOptions && (
-                            <div ref={optionsRef} className="absolute top-40 z-40 bg-[white] text-[gray] 
-                            rounded-[5px] [box-shadow:0px_0px_10px_-5px_rgba(0,_0,_0,_0.4)]">
-                                <div className="w-[200px] flex justify-between m-[10px]">
+                            <div ref={optionsRef} className="absolute top-40 z-40 bg-white text-gray-400 rounded-lg shadow-lg p-2">
+                                <div className="flex justify-between m-2">
                                     <span className="optionText">Adult</span>
-                                    <div className="flex items-center gap-[10px] text-[12px] text-[black]">
+                                    <div className="flex items-center gap-2 text-black">
                                         <button
                                             disabled={searchPref.adult <= 1}
-                                            className="w-[30px] h-[30px] border-[1px] border-[solid]
-                                             border-[#0071c2] text-[#0071c2]
-                                             shadow-lg rounded-b-md cursor-pointer bg-[white]"
+                                            className="w-8 h-8 border border-solid border-blue-500 text-blue-500 shadow-lg rounded-full cursor-pointer bg-white"
                                             onClick={() => handleOption("adult", "d")}
                                         >
                                             -
                                         </button>
                                         <span className="optionCounterNumber">{searchPref.adult}</span>
                                         <button
-                                            className="w-[30px] h-[30px] border-[1px] border-[solid]
-                                            border-[#0071c2] text-[#0071c2]
-                                            shadow-lg rounded-t-md cursor-pointer bg-[white]"
+                                            className="w-8 h-8 border border-solid border-blue-500 text-blue-500 shadow-lg rounded-full cursor-pointer bg-white"
                                             onClick={() => handleOption("adult", "i")}
                                         >
                                             +
                                         </button>
                                     </div>
                                 </div>
-                                <div className="w-[200px] flex justify-between m-[10px]">
+                                <div className="flex justify-between m-2">
                                     <span className="optionText">Children</span>
-                                    <div className="flex items-center gap-[10px] text-[12px] text-[black]">
+                                    <div className="flex items-center gap-2 text-black">
                                         <button
                                             disabled={searchPref.children <= 0}
-                                            className="w-[30px] h-[30px] border-[1px] border-[solid]
-                                             border-[#0071c2] text-[#0071c2]
-                                             shadow-lg rounded-b-md cursor-pointer bg-[white]"
+                                            className="w-8 h-8 border border-solid border-blue-500 text-blue-500 shadow-lg rounded-full cursor-pointer bg-white"
                                             onClick={() => handleOption("children", "d")}
                                         >
                                             -
                                         </button>
                                         <span className="optionCounterNumber">{searchPref.children}</span>
                                         <button
-                                            className="w-[30px] h-[30px] border-[1px] border-[solid]
-                                            border-[#0071c2] text-[#0071c2]
-                                            shadow-lg rounded-t-md cursor-pointer bg-[white]"
+                                            className="w-8 h-8 border border-solid border-blue-500 text-blue-500 shadow-lg rounded-full cursor-pointer bg-white"
                                             onClick={() => handleOption("children", "i")}
                                         >
                                             +
                                         </button>
                                     </div>
                                 </div>
-                                <div className="w-[200px] flex justify-between m-[10px]">
+                                <div className="flex justify-between m-2">
                                     <span className="optionText">Room</span>
-                                    <div className="flex items-center gap-[10px] text-[12px] text-[black]">
+                                    <div className="flex items-center gap-2 text-black">
                                         <button
                                             disabled={searchPref.room <= 1}
-                                            className="w-[30px] h-[30px] border-[1px] border-[solid]
-                                             border-[#0071c2] text-[#0071c2]
-                                             shadow-lg rounded-b-md cursor-pointer bg-[white]"
+                                            className="w-8 h-8 border border-solid border-blue-500 text-blue-500 shadow-lg rounded-full cursor-pointer bg-white"
+                                            onClick={() => handleOption("room", "d")}
                                         >
                                             -
                                         </button>
                                         <span className="optionCounterNumber">{searchPref.room}</span>
                                         <button
-                                            className="w-[30px] h-[30px] border-[1px] border-[solid]
-                                            border-[#0071c2] text-[#0071c2]
-                                            shadow-lg rounded-t-md cursor-pointer bg-[white]"
+                                            className="w-8 h-8 border border-solid border-blue-500 text-blue-500 shadow-lg rounded-full cursor-pointer bg-white"
                                             onClick={() => handleOption("room", "i")}
                                         >
                                             +
@@ -213,9 +214,8 @@ export default function IndexPage() {
                             </div>
                         )}
                     </div>
-                    <div className="flex items-center gap-[10px] pr-2">
-                        <button className="bg-[#1aa7ec] text-white py-[10px] 
-                        px-5 border-white cursor-pointer hover:bg-cyan-700 rounded-full" onClick={handleSearch}>
+                    <div className="flex items-center gap-2 pr-2">
+                        <button className="bg-blue-500 text-white py-2 px-5 border-white cursor-pointer hover:bg-cyan-700 rounded-full" onClick={handleSearch}>
                             Reserve Room
                         </button>
                     </div>

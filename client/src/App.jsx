@@ -15,11 +15,12 @@ import Confirmation from "./pages/Confirmation.jsx";
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import { AuthProvider } from './assets/components/AuthContext'; 
+import SendEmail from './pages/SendEmail.jsx';
 
 function App() {
   return (
     <AuthProvider>
-      <div className="bg-gradient-to-t from-[#afd3e2] to-[#FFDFDF] flex flex-col min-h-screen">
+      <div className="bg-gradient-to-t from-[#afd3e2] to-[#ffa6a6] flex flex-col min-h-screen">
         <div className="bg-lightcyan min-h-[50px]">
           <Header/>
         </div>
@@ -38,6 +39,7 @@ function App() {
             <Route path="/amenities" element={<Services />} />
             <Route path="/reservations" element={<FindReservation />} />
             <Route path="/confirmation" element={<Confirmation />} />
+            <Route path="/sendEmail" element={<SendEmail />} />
           </Routes>
         </div>
         <div className="bg-papayawhip min-h-[50px]">

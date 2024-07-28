@@ -4,7 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { isAfter, parse } from 'date-fns';
 
-export default function FetchReservation() {
+export default function FindReservation() {
   const [reservationID, setReservationID] = useState('');
   const [fullName, setFullName] = useState('');
   const [reservationDetails, setReservationDetails] = useState(null);
@@ -12,33 +12,25 @@ export default function FetchReservation() {
 
   const handleFetch = async (e) => {
     e.preventDefault();
-    // Reset previous error and details
     setError('');
     setReservationDetails(null);
 
     try {
       const response = await axios.get(`/api/lookup?id=${reservationID}`);
       if (response.status === 200) {
-        const reservation = JSON.parse(response.data);
-        // Check if the name matches
-        if (reservation._primary_guest._name.toLowerCase() === fullName.toLowerCase()) {
-          const departureDate = parse(
-            `${reservation._departure._year}-${reservation._departure._month}-${reservation._departure._day}`,
-            'yyyy-MM-dd',
-            new Date()
-          );
-
+        const reservation = response.data;
+        if (reservation.name.toLowerCase() === fullName.toLowerCase()) {
+          const departureDate = parse(reservation.departureDate, 'yyyy-MM-dd', new Date());
           const fulfillmentStatus = isAfter(new Date(), departureDate);
-
           setReservationDetails({
-            id: reservation._reservation_id,
-            name: reservation._primary_guest._name,
-            phone: reservation._primary_guest._phone_number,
-            numOfAdults: reservation._num_of_adults,
-            numOfChildren: reservation._num_of_children,
-            numOfRooms: reservation._num_of_rooms,
-            arrivalDate: `${reservation._arrival._month}/${reservation._arrival._day}/${reservation._arrival._year}`,
-            departureDate: `${reservation._departure._month}/${reservation._departure._day}/${reservation._departure._year}`,
+            id: reservation._id,
+            name: reservation.name,
+            phone: reservation.phone,
+            numOfAdults: reservation.numAdults,
+            numOfChildren: reservation.numChildren,
+            numOfRooms: reservation.numberRooms,
+            arrivalDate: reservation.arrivalDate,
+            departureDate: reservation.departureDate,
             fulfillmentStatus,
           });
         } else {

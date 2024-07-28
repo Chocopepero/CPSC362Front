@@ -29,12 +29,25 @@ const userSchema = new mongoose.Schema({
     postal_code: String,
     country: String
   }
-}, { collection: 'User_Account' }); 
+}, { collection: 'User_Account' });
+
+const reservationSchema = new mongoose.Schema({
+  name: String,
+  phone: String,
+  numAdults: Number,
+  numChildren: Number,
+  numberRooms: Number,
+  roomType: String,
+  arrivalDate: String,
+  departureDate: String,
+  totalCost: Number
+}, { collection: 'reservations' });
 
 const User = mongoose.model('User_Account', userSchema);
+const Reservation = mongoose.model('Reservation', reservationSchema);
 
 app.use(session({
-  secret: process.env.SECRET_KEY,
+  secret: process.env.SECRET_KEY || 'your_secret_key',
   resave: false,
   saveUninitialized: true
 }));
@@ -52,6 +65,45 @@ app.post('/api/login', async (req, res) => {
     }
     req.session.user = { email: user.email, name: user.name };
     res.json({ name: user.name });
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred. Please try again.' });
+  }
+});
+
+app.post('/api/register', async (req, res) => {
+  const { name, email, password, phone, address } = req.body;
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      phone,
+      address
+    });
+    await newUser.save();
+    res.status(201).json({ message: 'User registered successfully' });
+  } catch (err) {
+    res.status(500).json({ error: 'An error occurred. Please try again.' });
+  }
+});
+
+app.post('/api/reserve', async (req, res) => {
+  const { name, phone, numAdults, numChildren, numberRooms, roomType, arrivalDate, departureDate, totalCost } = req.body;
+  try {
+    const newReservation = new Reservation({
+      name,
+      phone,
+      numAdults,
+      numChildren,
+      numberRooms,
+      roomType,
+      arrivalDate,
+      departureDate,
+      totalCost
+    });
+    const savedReservation = await newReservation.save();
+    res.status(201).json({ message: 'Reservation created successfully', reservationId: savedReservation._id.toString() });
   } catch (err) {
     res.status(500).json({ error: 'An error occurred. Please try again.' });
   }
@@ -86,21 +138,16 @@ app.get('/api/authenticate', async (req, res) => {
   }
 });
 
-app.post('/api/register', async (req, res) => {
-  const { name, email, password, phone, address } = req.body;
+app.get('/api/lookup', async (req, res) => {
+  const { id } = req.query;
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({
-      name,
-      email,
-      password: hashedPassword,
-      phone,
-      address
-    });
-    await newUser.save();
-    res.status(201).json({ message: 'Successfully registered' });
+    const reservation = await Reservation.findOne({ _id: id });
+    if (!reservation) {
+      return res.status(404).json({ error: 'Reservation not found' });
+    }
+    res.json(reservation);
   } catch (err) {
-    res.status(500).json({ error: 'Server bad, An error occurred. Please try again.' });
+    res.status(500).json({ error: 'An error occurred. Please try again.' });
   }
 });
 

@@ -7,13 +7,12 @@ import img1 from "../images/Hotelpic1.jpeg";
 import img2 from "../images/DeluxeRoom.webp";
 import img3 from "../images/Hotelpic3.webp";
 
-// Sample room data for demonstration
 const rooms = [
     {
         id: 1,
         name: 'Deluxe Room',
         description: 'A spacious room with a beautiful view of the city.',
-        price: 200, // price as a number
+        price: 200,
         imageUrl: img2,
         link: '/DeluxeRoom'
     },
@@ -21,7 +20,7 @@ const rooms = [
         id: 2,
         name: 'Standard Room',
         description: 'A comfortable room with all the basic amenities.',
-        price: 100, // price as a number
+        price: 100,
         imageUrl: img1,
         link: '/StandardRoom'
     },
@@ -29,7 +28,7 @@ const rooms = [
         id: 3,
         name: 'Suite',
         description: 'A luxurious suite with a separate living area.',
-        price: 300, // price as a number
+        price: 300,
         imageUrl: img3,
         link: '/SuiteRoom'
     }
@@ -43,10 +42,7 @@ export default function Confirmation() {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
 
-    // Find the room details based on the selected RoomType
     const selectedRoom = rooms.find(room => room.name === RoomType);
-
-    // Calculate the total cost
     const nights = Math.ceil((date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24));
     const totalCost = selectedRoom ? selectedRoom.price * searchPref.room * nights : 0;
 
@@ -59,14 +55,15 @@ export default function Confirmation() {
             numberRooms: searchPref.room,
             roomType: RoomType,
             arrivalDate: format(date[0].startDate, "yyyy-MM-dd"),
-            departureDate: format(date[0].endDate, "yyyy-MM-dd")
+            departureDate: format(date[0].endDate, "yyyy-MM-dd"),
+            totalCost: totalCost
         };
 
         try {
             const response = await axios.post('/api/reserve', reservationData);
-            if (response.status === 200) {
+            if (response.status === 201) {
                 alert('Reservation successful!');
-                navigate('/sendEmail', { state: { RoomType, date, searchPref, totalCost } });
+                navigate('/sendEmail', { state: { RoomType, date, searchPref, totalCost, reservationData, reservationId: response.data.reservationId } });
             } else {
                 alert('Failed to create reservation');
             }
@@ -86,34 +83,28 @@ export default function Confirmation() {
                             <h2 className="text-xl font-semibold">Room Type</h2>
                             <p className="text-gray-600">{RoomType}</p>
                         </div>
-
                         <div className="mb-4">
                             <h2 className="text-xl font-semibold">Guests</h2>
                             <p className="text-gray-600">Adults: {searchPref.adult}</p>
                             <p className="text-gray-600">Children: {searchPref.children}</p>
                             <p className="text-gray-600">Total Rooms: {searchPref.room}</p>
                         </div>
-
                         <div className="mb-4">
                             <h2 className="text-xl font-semibold">Dates</h2>
                             <p className="text-gray-600">
                                 {`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(date[0].endDate, "MM/dd/yyyy")}`}
                             </p>
                         </div>
-
                         <div className="mb-4">
                             <h2 className="text-xl font-semibold">Total Cost</h2>
                             <p className="text-gray-600">$ {totalCost.toFixed(2)}</p>
                         </div>
-
                         <div className="mb-4">
                             <MDBInput label="Name" value={name} onChange={(e) => setName(e.target.value)} />
                         </div>
-
                         <div className="mb-4">
                             <MDBInput label="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
                         </div>
-
                         <MDBBtn color="primary" onClick={handleConfirmBooking}>
                             Confirm Booking
                         </MDBBtn>
