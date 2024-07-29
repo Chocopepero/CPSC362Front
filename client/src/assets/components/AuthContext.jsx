@@ -4,7 +4,10 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -12,6 +15,7 @@ export const AuthProvider = ({ children }) => {
         const response = await axios.get('/api/authenticate');
         if (response.data.loggedIn) {
           setUser(response.data.user);
+          localStorage.setItem('user', JSON.stringify(response.data.user));
         }
       } catch (error) {
         console.error('Error checking authentication', error);
@@ -25,6 +29,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post('/api/login', { email, password });
       if (response.status === 200) {
         setUser(response.data);
+        localStorage.setItem('user', JSON.stringify(response.data));
         return response.data; // Return user data on successful login
       } else {
         throw new Error('Login failed');
@@ -39,6 +44,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post('/api/logout');
       if (response.status === 200) {
         setUser(null);
+        localStorage.removeItem('user');
       } else {
         throw new Error('Logout failed');
       }

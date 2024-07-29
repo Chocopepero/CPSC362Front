@@ -1,6 +1,6 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import Layout from './Layout';
+import About from './About.jsx';
 import RegisterPage from './pages/RegisterPage';
 import IndexPage from './pages/IndexPage.jsx';
 import LoginPage from './pages/LoginPage';
@@ -30,6 +30,7 @@ function App() {
             <Route index element={<IndexPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/about" element={<About />} />
             <Route path="/DeluxeRoom" element={<DeluxeRoom />} />
             <Route path="/StandardRoom" element={<StandardRoom />} />
             <Route path="/SuiteRoom" element ={<SuiteRoom />} />

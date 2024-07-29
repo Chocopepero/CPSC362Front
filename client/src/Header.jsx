@@ -13,7 +13,7 @@ export default function Header() {
   const { user, logout } = useContext(AuthContext);
 
   console.log("Rendering Header component"); // Debug statement
-  console.log("User context:", user, user?.email); // Debug statement
+  console.log("User context:", user); // Debug statement
 
   return (
     <div>
@@ -49,8 +49,8 @@ export default function Header() {
                       <FontAwesomeIcon icon={faBars} />
                     </div>
                     <div className="flex flex-col items-center">
-                      <p className="text-xs pt-3">Account</p>
-                      <p className="text-xs pt-3">{user.email}</p>
+                      <p className="text-xs">Account</p>
+                      {/* <p className="text-xs pt-3">{user.email}</p> */}
                     </div>
                   </Link>
                   <button onClick={logout} className="flex items-center gap-2 border border-gray-300 rounded-full bg-transparent py-2 px-4">
@@ -58,7 +58,7 @@ export default function Header() {
                       <FontAwesomeIcon icon={faArrowRightFromBracket} />
                     </div>
                     <div className="flex flex-col items-center">
-                      <p className="text-xs pt-3">Logout</p>
+                      <p className="text-xs">Logout</p>
                     </div>
                   </button>
                 </div>
@@ -69,7 +69,7 @@ export default function Header() {
                   <FontAwesomeIcon icon={faUser} />
                 </div>
                 <div className="flex flex-col items-center">
-                  <p className="text-xs pt-3">Login/Register</p>
+                  <p className="text-xs">Login/Register</p>
                 </div>
               </Link>
             )}

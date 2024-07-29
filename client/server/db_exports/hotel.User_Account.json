@@ -2,8 +2,8 @@
   "_id": {
     "$oid": "66a58e74544a8e4e5a0a87b2"
   },
-  "name": "Harry",
-  "email": "harry@gmail.com",
+  "name": "AAAA",
+  "email": "1234@gmail.com",
   "password": "$2b$10$K0Sw0fb2gOyaDeGCXV8yFenExTrSKqisZe/Ffw9CsEYkGeXmnO6zW",
   "phone": "5555555555",
   "address": {
@@ -19,10 +19,10 @@
   "_id": {
     "$oid": "66a5901c544a8e4e5a0a87b4"
   },
-  "name": "Mira Kim",
-  "email": "mirakim@fullerton.edu",
+  "name": "MK",
+  "email": "harry@gmail.com",
   "password": "$2b$10$q4C2OIfYsp9QXgwmkOAdZ.JfdAeNZSGIlTY515s9bOhAcyRbZgmh6",
-  "phone": "8008008000",
+  "phone": "9009009999",
   "address": {
     "street_name": "Default Street",
     "city": "Default City",
@@ -30,5 +30,23 @@
     "postal_code": "12345",
     "country": "Default Country"
   },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a60dc88c12a77ccaa47a2a"
+  },
+  "name": "mira",
+  "email": "mirakim@fullerton.edu",
+  "password": "$2b$10$w1jJ85MqRA0C8IjWW3pkxOQp1/BOICbIIZUleP5D59JCifC7PuUAu",
+  "phone": "5555555555",
+  "address": {
+    "street_name": "Default Street",
+    "city": "Default City",
+    "state": "Default State",
+    "postal_code": "12345",
+    "country": "Default Country"
+  },
+  "reservations": [],
   "__v": 0
 }]

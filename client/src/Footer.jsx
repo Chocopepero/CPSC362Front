@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import facebookLogo from './images/facebookLogo.png';
 import instagramLogo from './images/instalogo.png';
 import twitterLogo from './images/twitterlogo.png';
-import Services from "./pages/Services.jsx";
+// import Services from "./pages/Services.jsx";
+// import AboutUs from "./About.jsx";
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -51,7 +52,7 @@ export default function Footer() {
 
         <div className="flex flex-col space-y-5">
           <div>
-            <Link to={Services} className="hover:underline">
+            <Link to="/about" className="hover:underline">
                 <p className="m-2 relative group">
                 <span>About Us</span>
                 <span className="absolute -bottom-1 left-1/2 w-0 h-2 bg-blue-600 group-hover:w-1/2 group-hover:transition-all"></span>
@@ -60,7 +61,7 @@ export default function Footer() {
             </Link>
           </div>
           <div>
-            <Link to={Services} className="hover:underline">
+            <Link to="/services" className="hover:underline">
                 <p className="m-2 relative group">
                 <span>Payment Policy</span>
                 <span className="absolute -bottom-1 left-1/2 w-0 h-2 bg-blue-600 group-hover:w-1/2 group-hover:transition-all"></span>

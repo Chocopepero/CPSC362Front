@@ -114,7 +114,7 @@ app.post('/api/update-name', async (req, res) => {
   const { email, newName } = req.body;
   try {
     const result = await User.updateOne({ email }, { $set: { name: newName } });
-    if (result.nModified > 0) {
+    if (result.modifiedCount > 0) {
       res.status(200).json({ message: 'Name updated successfully' });
     } else {
       res.status(404).json({ error: 'User not found' });
@@ -128,7 +128,7 @@ app.post('/api/update-email', async (req, res) => {
   const { oldEmail, newEmail } = req.body;
   try {
     const result = await User.updateOne({ email: oldEmail }, { $set: { email: newEmail } });
-    if (result.nModified > 0) {
+    if (result.modifiedCount > 0) {
       res.status(200).json({ message: 'Email updated successfully' });
     } else {
       res.status(404).json({ error: 'User not found' });

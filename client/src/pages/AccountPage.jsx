@@ -1,7 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../assets/components/AuthContext';
 import { MDBInput, MDBBtn, MDBCard } from 'mdb-react-ui-kit';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons';
 
 export default function AccountPage() {
   const { user } = useContext(AuthContext);
@@ -10,29 +13,22 @@ export default function AccountPage() {
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [reservationId, setReservationId] = useState('');
-  const userID = user._id;
-  const email = user.email;
-
-  console.log("Email passed was?", email); // Debug statement
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
-    console.log('Email from state:', email);  // Debugging statement
-    if (email) {
-      axios.get('/api/user', { params: { email } })
+    if (user && user.email) {
+      axios.get('/api/user', { params: { email: user.email } })
         .then(response => {
-          console.log('User details fetched:', response.data);  // Debugging statement
           setUserDetails(response.data);
         })
         .catch(error => {
           console.error('Error fetching user details:', error);
         });
-    } else {
-      console.error('Email not found from user from AuthContext');
     }
-  }, [email]);
+  }, [user]);
 
   const handleUpdateUsername = () => {
-    axios.post('/api/update-name', { email, newName: newUsername })
+    axios.post('/api/update-name', { email: user.email, newName: newUsername })
       .then(response => {
         alert('Username updated successfully');
         setUserDetails({ ...userDetails, name: newUsername });
@@ -43,7 +39,7 @@ export default function AccountPage() {
   };
 
   const handleUpdateEmail = () => {
-    axios.post('/api/update-email', { oldEmail: email, newEmail })
+    axios.post('/api/update-email', { oldEmail: user.email, newEmail })
       .then(response => {
         alert('Email updated successfully');
         setUserDetails({ ...userDetails, email: newEmail });
@@ -54,7 +50,7 @@ export default function AccountPage() {
   };
 
   const handleUpdatePassword = () => {
-    axios.post('/api/update-password', { email, password: newPassword })
+    axios.post('/api/update-password', { email: user.email, password: newPassword })
       .then(response => {
         alert('Password updated successfully');
       })
@@ -78,8 +74,17 @@ export default function AccountPage() {
   };
 
   if (!user) {
-    return <MDBCard className='flex flex-col items-center'>Please log in to view your account details.</MDBCard>;
+    return (
+      <MDBCard className="flex flex-col justify-center items-center p-4 mx-auto mt-40" style={{ maxWidth: '600px', height: '200px' }}>
+        <p className="text-center mb-4">Please log in to view your account details.</p>
+        <MDBBtn className="flex justify-center items-center p-2 
+         text-white rounded-xl transition-all duration-500 bg-gradient-to-t to-white via-black from-green-300 bg-size-200 hover:bg-right-bottom cursor-pointer" onClick={() => navigate('/')}>
+          <FontAwesomeIcon icon={faXmarkSquare} className="fa-2x" />
+        </MDBBtn>
+      </MDBCard>
+    );
   }
+  
 
   if (!userDetails) {
     return <div>Loading...</div>;

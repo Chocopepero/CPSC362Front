@@ -42,6 +42,7 @@ export default function LoginPage() {
     try {
       await login(email, password);
       navigate('/'); // Navigate to home page on successful login
+      window.location.reload(); // Reload the page to update the header
     } catch (error) {
       if (error.response) {
         if (error.response.status === 401) {
