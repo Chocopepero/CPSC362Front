@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { format } from "date-fns";
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -36,8 +36,8 @@ const rooms = [
 
 export default function Confirmation() {
     const { state } = useLocation();
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
-
 
     useEffect(() => {
         if (!state || !state.date) {
@@ -58,7 +58,17 @@ export default function Confirmation() {
     const nights = Math.ceil((date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24));
     const totalCost = selectedRoom ? selectedRoom.price * searchPref.room * nights : 0;
 
+    function validatePhone(phone) {
+        const re = /^\d{10}$/;
+        return re.test(phone);
+    }
+
     const handleConfirmBooking = async () => {
+        if (!validatePhone(phone)) {
+            setError('Invalid phone number format. Please enter a 10-digit number.');
+            return;
+        }
+
         const reservationData = {
             name: name,
             phone: phone,
@@ -90,7 +100,7 @@ export default function Confirmation() {
                 <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-lg shadow-lg">
                     <div className="p-6">
                         <h1 className="text-2xl font-bold mb-4">Booking Confirmation</h1>
-                        <img src={selectedRoom.imageUrl} alt="Picture of Room" className="hover:scale-105"/>
+                        <img src={selectedRoom.imageUrl} alt="Picture of Room" className="hover:scale-105" />
                         <div className="mb-4">
                             <h2 className="text-xl font-semibold">Room Type</h2>
                             <p className="text-gray-600">{RoomType}</p>
@@ -117,6 +127,7 @@ export default function Confirmation() {
                         <div className="mb-4">
                             <MDBInput label="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
                         </div>
+                        {error && <p className="text-red-500">{error}</p>}
                         <MDBBtn color="primary" onClick={handleConfirmBooking}>
                             Confirm Booking
                         </MDBBtn>
