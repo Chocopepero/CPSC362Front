@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import img1 from "../images/Hotelpic1.jpeg";
 import img2 from "../images/DeluxeRoom.webp";
@@ -11,8 +11,10 @@ import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import Select from 'react-select';
+import AuthContext from '../assets/components/AuthContext';
 
 export default function IndexPage() {
+    const { user } = useContext(AuthContext);
     const rooms = [
         {
             id: 1,
@@ -107,7 +109,7 @@ export default function IndexPage() {
                             onClick={() => setShowMessage(false)}
                             className="absolute top-0 right-0 px-4 py-3"
                         >
-                            <FontAwesomeIcon icon={faCircleXmark}/>
+                            <FontAwesomeIcon icon={faCircleXmark} />
                         </button>
                         <span className="block sm:inline">{message}</span>
                     </div>
@@ -223,7 +225,7 @@ export default function IndexPage() {
             </div>
 
             <div className="container m-auto p-8">
-                <h1 className="text-4xl font-bold mb-4 px-20">Welcome, Guest</h1>
+                <h1 className="text-4xl font-bold mb-4 px-20">Welcome, {user ? user.name : "Guest"}</h1>
                 <p className="text-lg mb-8 px-20">Enjoy your luxurious stay and peaceful getaway at the Blissful Hotel</p>
 
                 <h2 className="text-3xl font-bold justify-between mb-4 px-20">Our Rooms</h2>
