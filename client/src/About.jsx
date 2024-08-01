@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHotel, faCartFlatbedSuitcase, faUtensils, faPersonSkiingNordic, faRecycle, faBellConcierge } from '@fortawesome/free-solid-svg-icons';
 import { MDBContainer } from 'mdb-react-ui-kit';
 
 export default function Services() {
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  useEffect(() => {
+    setIframeLoaded(true);
+  }, []);
+
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-full">
-        <iframe
-          className="w-full h-full"
-          src="https://www.youtube.com/embed/J8AWyawBVx0?autoplay=1&mute=1&loop=1&playlist=J8AWyawBVx0&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1"
-
-          allow="autoplay; loop; fullscreen"
-          allowFullScreen
-          title="Background Video"
-        ></iframe>
+        {iframeLoaded && (
+          <iframe
+            className="w-full h-full"
+            src="https://www.youtube.com/embed/J8AWyawBVx0?autoplay=1&mute=1&loop=1&playlist=J8AWyawBVx0&controls=0&showinfo=0&modestbranding=1&iv_load_policy=3&disablekb=1"
+            allow="autoplay; loop; fullscreen"
+            allowFullScreen
+            title="Background Video"
+          ></iframe>
+        )}
       </div>
       <MDBContainer fluid className="relative z-10 d-flex align-items-center justify-content-center p-0 h-screen">
         <div className="bg-blue-900 bg-opacity-75 text-white p-4 text-center rounded-lg shadow-md w-full max-w-4xl">

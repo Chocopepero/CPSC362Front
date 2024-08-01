@@ -53,6 +53,7 @@ export default function Confirmation() {
 
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
 
     const selectedRoom = rooms.find(room => room.name === RoomType);
     const nights = Math.ceil((date[0].endDate - date[0].startDate) / (1000 * 60 * 60 * 24));
@@ -64,21 +65,27 @@ export default function Confirmation() {
     }
 
     const handleConfirmBooking = async () => {
-        if (!validatePhone(phone)) {
+        // Trim the input values
+        const trimmedName = name.trim();
+        const trimmedPhone = phone.trim();
+        const trimmedEmail = email.trim();
+
+        if (!validatePhone(trimmedPhone)) {
             setError('Invalid phone number format. Please enter a 10-digit number.');
             return;
         }
 
         const reservationData = {
-            name: name,
-            phone: phone,
+            name: trimmedName,
+            phone: trimmedPhone,
             numAdults: searchPref.adult,
             numChildren: searchPref.children,
             numberRooms: searchPref.room,
             roomType: RoomType,
             arrivalDate: format(date[0].startDate, "yyyy-MM-dd"),
             departureDate: format(date[0].endDate, "yyyy-MM-dd"),
-            totalCost: totalCost
+            totalCost: totalCost,
+            email: trimmedEmail // Include trimmed email field
         };
 
         try {
@@ -100,7 +107,7 @@ export default function Confirmation() {
                 <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-lg shadow-lg">
                     <div className="p-6">
                         <h1 className="text-2xl font-bold mb-4">Booking Confirmation</h1>
-                        <img src={selectedRoom.imageUrl} alt="Picture of Room" className="hover:scale-105" />
+                        {selectedRoom && <img src={selectedRoom.imageUrl} alt="Picture of Room" className="hover:scale-105" />}
                         <div className="mb-4">
                             <h2 className="text-xl font-semibold">Room Type</h2>
                             <p className="text-gray-600">{RoomType}</p>
@@ -126,6 +133,9 @@ export default function Confirmation() {
                         </div>
                         <div className="mb-4">
                             <MDBInput label="Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
+                        </div>
+                        <div className="mb-4">
+                            <MDBInput label="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         {error && <p className="text-red-500">{error}</p>}
                         <MDBBtn color="primary" onClick={handleConfirmBooking}>

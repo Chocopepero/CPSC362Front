@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import facebookLogo from './images/facebookLogo.png';
 import instagramLogo from './images/instalogo.png';
 import twitterLogo from './images/twitterlogo.png';
-// import Services from "./pages/Services.jsx";
-// import AboutUs from "./About.jsx";
 
 export default function Footer() {
   const [email, setEmail] = useState('');
@@ -18,7 +16,7 @@ export default function Footer() {
       return;
     }
     setErrorMessage('');
-    // Handle the form submission (e.g., send data to server)
+    // Handle the form submission (send data to server)
     console.log('Email submitted:', email);
   };
 
@@ -36,6 +34,7 @@ export default function Footer() {
           <h2 className="font-bold mb-2">Subscribe for Promotions & News</h2>
           <form onSubmit={handleSubmit} className="flex flex-col items-center">
             <input
+              autoComplete='on'
               type="email"
               id="email"
               name="email"

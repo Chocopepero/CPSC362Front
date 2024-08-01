@@ -16,6 +16,8 @@ import Header from './Header.jsx';
 import Footer from './Footer.jsx';
 import { AuthProvider } from './assets/components/AuthContext'; 
 import SendEmail from './pages/SendEmail.jsx';
+import AdminPage from './pages/AdminPage.jsx';
+import ProtectedRoute from './assets/components/ProtectedRoute.jsx';
 
 function App() {
   return (
@@ -41,6 +43,14 @@ function App() {
             <Route path="/reservations" element={<FindReservation />} />
             <Route path="/confirmation" element={<Confirmation />} />
             <Route path="/sendEmail" element={<SendEmail />} />
+            <Route 
+              path="/admin" 
+              element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminPage />
+                </ProtectedRoute>
+              } 
+            />
           </Routes>
         </div>
         <div className="bg-papayawhip min-h-[50px]">

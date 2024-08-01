@@ -1,52 +1,18 @@
-import React, { useContext, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import img1 from "../images/Hotelpic1.jpeg";
-import img2 from "../images/DeluxeRoom.webp";
-import img3 from "../images/Hotelpic3.webp";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
-import { faBed, faCircleXmark, faPerson } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays, faBed, faCircleXmark, faPerson } from "@fortawesome/free-solid-svg-icons";
 import { DateRange } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import Select from 'react-select';
-import AuthContext from '../assets/components/AuthContext';
+import axios from 'axios';
+import AuthContext from '../assets/components/AuthContext'; // Import AuthContext
 
 export default function IndexPage() {
-    const { user } = useContext(AuthContext);
-    const rooms = [
-        {
-            id: 1,
-            name: 'Deluxe Room',
-            description: 'A spacious room with a beautiful view of the city.',
-            price: '$200 per night',
-            imageUrl: img2,
-            link: '/DeluxeRoom'
-        },
-        {
-            id: 2,
-            name: 'Standard Room',
-            description: 'A comfortable room with all the basic amenities.',
-            price: '$100 per night',
-            imageUrl: img1,
-            link: '/StandardRoom'
-        },
-        {
-            id: 3,
-            name: 'Suite',
-            description: 'A luxurious suite with a separate living area.',
-            price: '$300 per night',
-            imageUrl: img3,
-            link: '/SuiteRoom'
-        }
-    ];
-
-    const options = rooms.map(room => ({
-        value: room.id,
-        label: room.name,
-    }));
-
+    const { user } = useContext(AuthContext); // Get the user from AuthContext
+    const [rooms, setRooms] = useState([]);
     const [RoomType, setRoomType] = useState("");
     const [openDate, setOpenDate] = useState(false);
     const [date, setDate] = useState([
@@ -70,6 +36,23 @@ export default function IndexPage() {
 
     const dateRangeRef = useRef(null);
     const optionsRef = useRef(null);
+
+    useEffect(() => {
+        const fetchRooms = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/rooms');
+                setRooms(response.data);
+            } catch (error) {
+                console.error('Error fetching rooms:', error);
+            }
+        };
+        fetchRooms();
+    }, []);
+
+    const options = rooms.map(room => ({
+        value: room._id,
+        label: room.name,
+    }));
 
     const handleOption = (name, operation) => {
         setPreferenceSearch((prev) => {
@@ -109,7 +92,7 @@ export default function IndexPage() {
                             onClick={() => setShowMessage(false)}
                             className="absolute top-0 right-0 px-4 py-3"
                         >
-                            <FontAwesomeIcon icon={faCircleXmark} />
+                            <FontAwesomeIcon icon={faCircleXmark}/>
                         </button>
                         <span className="block sm:inline">{message}</span>
                     </div>
@@ -225,19 +208,21 @@ export default function IndexPage() {
             </div>
 
             <div className="container m-auto p-8">
-                <h1 className="text-4xl font-bold mb-4 px-20">Welcome, {user ? user.name : "Guest"}</h1>
+                <h1 className="text-4xl font-bold mb-4 px-20">
+                    {user ? `Welcome, ${user.name}` : 'Welcome, Guest'}
+                </h1>
                 <p className="text-lg mb-8 px-20">Enjoy your luxurious stay and peaceful getaway at the Blissful Hotel</p>
 
                 <h2 className="text-3xl font-bold justify-between mb-4 px-20">Our Rooms</h2>
                 <div className="w-full px-4 md:px-8 lg:px-16">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 justify-items-stretch">
                         {rooms.map(room => (
-                            <div key={room.id} className="border rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105">
-                                <img src={room.imageUrl} alt={room.name} className="w-full h-48 object-cover" />
+                            <div key={room._id} className="border rounded-lg overflow-hidden shadow-lg transform transition-transform hover:scale-105">
+                                <img src={`http://localhost:5000${room.imageUrl}`} alt={room.name} className="w-full h-48 object-cover" />
                                 <div className="p-4 gap-4">
                                     <h3 className="text-xl font-bold">{room.name}</h3>
                                     <p className="mt-2 text-gray-600">{room.description}</p>
-                                    <p className="mt-2 font-bold">{room.price}</p>
+                                    <p className="mt-2 font-bold">${room.price} per night</p>
                                     <Link to={room.link} className="relative bottom-0 left-0 inline-block bg-blue-500 text-white py-2 px-4 rounded">
                                         View More
                                     </Link>

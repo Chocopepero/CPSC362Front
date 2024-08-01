@@ -1,10 +1,22 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import AuthContext from '../assets/components/AuthContext';
-import { MDBInput, MDBBtn, MDBCard } from 'mdb-react-ui-kit';
+import {
+  MDBInput,
+  MDBBtn,
+  MDBCard,
+  MDBCardBody,
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBSpinner,
+  MDBBreadcrumb,
+  MDBBreadcrumbItem,
+  MDBCardText,
+} from 'mdb-react-ui-kit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmarkSquare } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 
 export default function AccountPage() {
   const { user } = useContext(AuthContext);
@@ -12,7 +24,6 @@ export default function AccountPage() {
   const [newUsername, setNewUsername] = useState('');
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [reservationId, setReservationId] = useState('');
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -29,7 +40,7 @@ export default function AccountPage() {
 
   const handleUpdateUsername = () => {
     axios.post('/api/update-name', { email: user.email, newName: newUsername })
-      .then(response => {
+      .then(() => {
         alert('Username updated successfully');
         setUserDetails({ ...userDetails, name: newUsername });
       })
@@ -40,7 +51,7 @@ export default function AccountPage() {
 
   const handleUpdateEmail = () => {
     axios.post('/api/update-email', { oldEmail: user.email, newEmail })
-      .then(response => {
+      .then(() => {
         alert('Email updated successfully');
         setUserDetails({ ...userDetails, email: newEmail });
       })
@@ -51,7 +62,7 @@ export default function AccountPage() {
 
   const handleUpdatePassword = () => {
     axios.post('/api/update-password', { email: user.email, password: newPassword })
-      .then(response => {
+      .then(() => {
         alert('Password updated successfully');
       })
       .catch(error => {
@@ -59,13 +70,13 @@ export default function AccountPage() {
       });
   };
 
-  const handleCancelReservation = () => {
-    axios.post('/api/cancel-reservation', { reservationId })
-      .then(response => {
+  const handleCancelReservation = (id) => {
+    axios.post('/api/cancel-reservation', { reservationId: id, email: user.email })
+      .then(() => {
         alert('Reservation cancelled successfully');
         setUserDetails({
           ...userDetails,
-          reservations: userDetails.reservations.filter(id => id !== parseInt(reservationId))
+          reservations: userDetails.reservations.filter(reservation => reservation._id !== id)
         });
       })
       .catch(error => {
@@ -75,58 +86,128 @@ export default function AccountPage() {
 
   if (!user) {
     return (
-      <MDBCard className="flex flex-col justify-center items-center p-4 mx-auto mt-40" style={{ maxWidth: '600px', height: '200px' }}>
-        <p className="text-center mb-4">Please log in to view your account details.</p>
-        <MDBBtn className="flex justify-center items-center p-2 
-         text-white rounded-xl transition-all duration-500 bg-gradient-to-t to-white via-black from-green-300 bg-size-200 hover:bg-right-bottom cursor-pointer" onClick={() => navigate('/')}>
-          <FontAwesomeIcon icon={faXmarkSquare} className="fa-2x" />
-        </MDBBtn>
+      <MDBCard className="text-center mx-auto my-5" style={{ maxWidth: '600px' }}>
+        <MDBCardBody>
+          <p>Please log in to view your account details.</p>
+          <MDBBtn color="primary" onClick={() => navigate('/login')}>
+            <FontAwesomeIcon icon={faUser} /> Go to Login
+          </MDBBtn>
+        </MDBCardBody>
       </MDBCard>
     );
   }
-  
 
   if (!userDetails) {
-    return <div>Loading...</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <MDBSpinner role="status">
+          <span className="visually-hidden">Loading...</span>
+        </MDBSpinner>
+      </div>
+    );
   }
 
   return (
-    <div className="p-4 flex-col">
-      <div className="container mx-auto p-8">
-        <div className="max-w-md mx-auto bg-white border border-gray-200 rounded-lg shadow-lg">
-          <div className="p-6">
-            <h2 className="text-2xl font-bold mb-4">Account Page</h2>
-            <div>
-              <h3 className="text-xl font-semibold">Contact Information</h3>
-              <p>Name: {userDetails.name}</p>
-              <p>Phone: {userDetails.phone}</p>
-              <p>Street: {userDetails.address.street_name}</p>
-              <p>City: {userDetails.address.city}</p>
-              <p>State: {userDetails.address.state}</p>
-              <p>Postal Code: {userDetails.address.postal_code}</p>
-              <p>Country: {userDetails.address.country}</p>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold">Username</h3>
-              <p>{userDetails.name}</p>
-              <MDBInput label="New Username" value={newUsername} onChange={(e) => setNewUsername(e.target.value)} />
-              <MDBBtn onClick={handleUpdateUsername} className="mt-2">Update Username</MDBBtn>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold">Email</h3>
-              <p>{userDetails.email}</p>
-              <MDBInput label="New Email" value={newEmail} onChange={(e) => setNewEmail(e.target.value)} />
-              <MDBBtn onClick={handleUpdateEmail} className="mt-2">Update Email</MDBBtn>
-            </div>
-            <div className="mb-4">
-              <h3 className="text-xl font-semibold">Change Password</h3>
-              <MDBInput label="New Password" type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} />
-              <MDBBtn onClick={handleUpdatePassword} className="mt-2">Update Password</MDBBtn>
-            </div>
-            {/* Add reservation list and cancel functionality if needed */}
-          </div>
-        </div>
-      </div>
-    </div>
+    <section style={{ backgroundColor: '#eee' }}>
+      <MDBContainer className="py-5">
+        <MDBRow>
+          <MDBCol>
+            <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
+              <MDBBreadcrumbItem>
+                <Link to='/'>Home</Link>
+              </MDBBreadcrumbItem>
+              <MDBBreadcrumbItem>
+                <Link to="/login">User</Link>
+              </MDBBreadcrumbItem>
+              <MDBBreadcrumbItem active>Account Page</MDBBreadcrumbItem>
+            </MDBBreadcrumb>
+          </MDBCol>
+        </MDBRow>
+
+        <MDBRow>
+          <MDBCol lg="4">
+            <MDBCard className="mb-4 text-xl">
+              <MDBCardBody className="text-center">
+                <MDBCardText>Name: {userDetails.name}</MDBCardText>
+                <MDBCardText>Email: {userDetails.email}</MDBCardText>
+                <MDBCardText>Phone: {userDetails.phone}</MDBCardText>
+                <MDBCardText>Address: {`${userDetails.address.street_name}, ${userDetails.address.city}, ${userDetails.address.state}, ${userDetails.address.postal_code}, ${userDetails.address.country}`}</MDBCardText>
+              </MDBCardBody>
+            </MDBCard>
+            {userDetails.role === 'admin' && (
+              <Link to="/admin">
+                <MDBBtn color="info" className="w-100">Go to Admin Page</MDBBtn>
+              </Link>
+            )}
+          </MDBCol>
+          <MDBCol lg="8">
+            <MDBCard className="mb-4">
+              <MDBCardBody>
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Full Name</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBInput value={newUsername} onChange={(e) => setNewUsername(e.target.value)} label="New Username" />
+                    <MDBBtn color="success" className="mt-2 my-2" onClick={handleUpdateUsername}>Update Username</MDBBtn>
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Email</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBInput value={newEmail} onChange={(e) => setNewEmail(e.target.value)} 
+                    className="my-2" label="New Email" />
+                    <MDBBtn color="success" className="mt-2 my-2" onClick={handleUpdateEmail}>Update Email</MDBBtn>
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Change Password</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBInput type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} 
+                    className="my-2" label="New Password" />
+                    <MDBBtn color="success" className="my-2 my-2" onClick={handleUpdatePassword}>Update Password</MDBBtn>
+                  </MDBCol>
+                </MDBRow>
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+
+        <MDBRow>
+          <MDBCol>
+            <MDBCard className="mb-4">
+              <MDBCardBody>
+                <h5 className="mb-4 text-2xl">Reservations</h5>
+                {userDetails.reservations.map(reservation => (
+                  <MDBCard key={reservation._id} className="mb-3">
+                    <MDBCardBody>
+                      <MDBCardText><strong>Reservation ID:</strong> {reservation._id}</MDBCardText>
+                      <MDBCardText><strong>Name:</strong> {reservation.name}</MDBCardText>
+                      <MDBCardText><strong>Phone:</strong> {reservation.phone}</MDBCardText>
+                      <MDBCardText><strong>Number of Adults:</strong> {reservation.numAdults}</MDBCardText>
+                      <MDBCardText><strong>Number of Children:</strong> {reservation.numChildren}</MDBCardText>
+                      <MDBCardText><strong>Number of Rooms:</strong> {reservation.numberRooms}</MDBCardText>
+                      <MDBCardText><strong>Room Type:</strong> {reservation.roomType}</MDBCardText>
+                      <MDBCardText><strong>Arrival Date:</strong> {reservation.arrivalDate}</MDBCardText>
+                      <MDBCardText><strong>Departure Date:</strong> {reservation.departureDate}</MDBCardText>
+                      <MDBCardText><strong>Total Cost:</strong> {reservation.totalCost}</MDBCardText>
+                      <MDBBtn color="danger" onClick={() => handleCancelReservation(reservation._id)}>
+                        <FontAwesomeIcon icon={faTrashAlt} /> Cancel Reservation
+                      </MDBBtn>
+                    </MDBCardBody>
+                  </MDBCard>
+                ))}
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    </section>
   );
 }

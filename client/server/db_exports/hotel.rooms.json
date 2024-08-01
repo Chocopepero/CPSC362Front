@@ -1,0 +1,30 @@
+[{
+  "_id": {
+    "$oid": "66aae1409d66ff698115bfd7"
+  },
+  "name": "Deluxe Room",
+  "description": "A spacious room with a beautiful view of the city.",
+  "price": 200,
+  "imageUrl": "/images/DeluxeRoom.webp",
+  "link": "/DeluxeRoom"
+},
+{
+  "_id": {
+    "$oid": "66aae1409d66ff698115bfd8"
+  },
+  "name": "Standard Room",
+  "description": "A comfortable room with all the basic amenities.",
+  "price": 100,
+  "imageUrl": "/images/Hotelpic1.jpeg",
+  "link": "/StandardRoom"
+},
+{
+  "_id": {
+    "$oid": "66aae1409d66ff698115bfd9"
+  },
+  "name": "Suite",
+  "description": "A luxurious suite with a separate living area.",
+  "price": 300,
+  "imageUrl": "/images/Hotelpic3.webp",
+  "link": "/SuiteRoom"
+}]

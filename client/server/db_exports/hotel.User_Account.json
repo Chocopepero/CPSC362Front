@@ -1,11 +1,11 @@
 [{
   "_id": {
-    "$oid": "66a58e74544a8e4e5a0a87b2"
+    "$oid": "66aad5250c617316c459f4b4"
   },
-  "name": "AAAA",
-  "email": "1234@gmail.com",
-  "password": "$2b$10$K0Sw0fb2gOyaDeGCXV8yFenExTrSKqisZe/Ffw9CsEYkGeXmnO6zW",
-  "phone": "5555555555",
+  "name": "Not Admin",
+  "email": "notadmin@gmail.com",
+  "password": "$2b$10$H/KckOg9KPpDFI6tdtjLm.4e1fzdVPk7mRehaYyAvzXgkIbLqnEHC",
+  "phone": "1234567890",
   "address": {
     "street_name": "Default Street",
     "city": "Default City",
@@ -13,40 +13,30 @@
     "postal_code": "12345",
     "country": "Default Country"
   },
-  "__v": 0
+  "role": "user",
+  "reservations": [
+    {
+      "$oid": "66ab0746b648b72c56aed9d7"
+    }
+  ],
+  "__v": 5
 },
 {
   "_id": {
-    "$oid": "66a5901c544a8e4e5a0a87b4"
+    "$oid": "66aaf7e9ab9cf026b0455fd9"
   },
-  "name": "MK",
-  "email": "harry@gmail.com",
-  "password": "$2b$10$q4C2OIfYsp9QXgwmkOAdZ.JfdAeNZSGIlTY515s9bOhAcyRbZgmh6",
-  "phone": "9009009999",
+  "name": "Admin",
+  "email": "admin@admin.com",
+  "password": "$2b$10$INjKQzzpWrNaWx0OEdwsyeBn6GnpCOLAFFKApaVqDnsLEtHXIoJam",
+  "phone": "8007008888",
   "address": {
-    "street_name": "Default Street",
-    "city": "Default City",
-    "state": "Default State",
-    "postal_code": "12345",
-    "country": "Default Country"
+    "street_name": "Admin Street",
+    "city": "Folgefonna",
+    "state": "Somewhere",
+    "postal_code": "80009",
+    "country": "Norway"
   },
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "66a60dc88c12a77ccaa47a2a"
-  },
-  "name": "mira",
-  "email": "mirakim@fullerton.edu",
-  "password": "$2b$10$w1jJ85MqRA0C8IjWW3pkxOQp1/BOICbIIZUleP5D59JCifC7PuUAu",
-  "phone": "5555555555",
-  "address": {
-    "street_name": "Default Street",
-    "city": "Default City",
-    "state": "Default State",
-    "postal_code": "12345",
-    "country": "Default Country"
-  },
+  "role": "admin",
   "reservations": [],
   "__v": 0
 }]

@@ -15,6 +15,10 @@ export default function Header() {
   console.log("Rendering Header component"); // Debug statement
   console.log("User context:", user); // Debug statement
 
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <div>
       <header className="p-4 flex-col bg-gradient-to-t from-[#f6f1f1] to-[#FFDFDF] text-black">
@@ -53,14 +57,16 @@ export default function Header() {
                       {/* <p className="text-xs pt-3">{user.email}</p> */}
                     </div>
                   </Link>
-                  <button onClick={logout} className="flex items-center gap-2 border border-gray-300 rounded-full bg-transparent py-2 px-4">
-                    <div className="flex flex-col items-center bg-gray-500 text-white rounded-full border border-gray-500 p-1 overflow-hidden">
-                      <FontAwesomeIcon icon={faArrowRightFromBracket} />
-                    </div>
-                    <div className="flex flex-col items-center">
-                      <p className="text-xs">Logout</p>
-                    </div>
-                  </button>
+                  <Link to="/">
+                    <button onClick={handleLogout} className="flex items-center gap-2 border border-gray-300 rounded-full bg-transparent py-2 px-4">
+                      <div className="flex flex-col items-center bg-gray-500 text-white rounded-full border border-gray-500 p-1 overflow-hidden">
+                        <FontAwesomeIcon icon={faArrowRightFromBracket} />
+                      </div>
+                      <div className="flex flex-col items-center">
+                        <p className="text-xs">Logout</p>
+                      </div>
+                    </button>
+                  </Link>
                 </div>
               </>
             ) : (

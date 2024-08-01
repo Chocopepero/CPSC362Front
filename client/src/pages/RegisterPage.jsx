@@ -18,6 +18,11 @@ export default function RegisterPage() {
   const [phone_num, setPhoneNum] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
+  const [streetName, setStreetName] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [country, setCountry] = useState('');
   const [error, setError] = useState(null);
   const [serverError, setServerError] = useState(null);
   const navigate = useNavigate(); // Initialize useNavigate hook
@@ -37,38 +42,51 @@ export default function RegisterPage() {
     setError(null);
     setServerError(null);
 
-    if (!name || !email || !phone_num || !password || !repeatPassword) {
+    // Trim the input values
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedPhoneNum = phone_num.trim();
+    const trimmedPassword = password.trim();
+    const trimmedRepeatPassword = repeatPassword.trim();
+    const trimmedStreetName = streetName.trim();
+    const trimmedCity = city.trim();
+    const trimmedState = state.trim();
+    const trimmedPostalCode = postalCode.trim();
+    const trimmedCountry = country.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedPhoneNum || !trimmedPassword || !trimmedRepeatPassword ||
+        !trimmedStreetName || !trimmedCity || !trimmedState || !trimmedPostalCode || !trimmedCountry) {
       setError('All fields are required.');
       return;
     }
 
-    if (!validateEmail(email)) {
+    if (!validateEmail(trimmedEmail)) {
       setError('Invalid email format.');
       return;
     }
 
-    if (!validatePhone(phone_num)) {
+    if (!validatePhone(trimmedPhoneNum)) {
       setError('Invalid phone number format. Please enter a 10-digit number.');
       return;
     }
 
-    if (password !== repeatPassword) {
+    if (trimmedPassword !== trimmedRepeatPassword) {
       setError('Passwords do not match.');
       return;
     }
 
     try {
       const response = await axios.post('/api/register', {
-        name,
-        email,
-        password,
-        phone: phone_num,
+        name: trimmedName,
+        email: trimmedEmail,
+        password: trimmedPassword,
+        phone: trimmedPhoneNum,
         address: {
-          street_name: 'Default Street', // Modify this as per your form inputs
-          city: 'Default City', // Modify this as per your form inputs
-          state: 'Default State', // Modify this as per your form inputs
-          postal_code: '12345', // Modify this as per your form inputs
-          country: 'Default Country' // Modify this as per your form inputs
+          street_name: trimmedStreetName,
+          city: trimmedCity,
+          state: trimmedState,
+          postal_code: trimmedPostalCode,
+          country: trimmedCountry,
         }
       });
       console.log(response.data);
@@ -139,6 +157,56 @@ export default function RegisterPage() {
               type='password' 
               value={repeatPassword}
               onChange={ev => setRepeatPassword(ev.target.value)}
+              required
+            />
+            <MDBInput 
+              wrapperClass='mb-4' 
+              label='Street Name' 
+              size='lg' 
+              id='form6' 
+              type='text' 
+              value={streetName}
+              onChange={ev => setStreetName(ev.target.value)}
+              required
+            />
+            <MDBInput 
+              wrapperClass='mb-4' 
+              label='City' 
+              size='lg' 
+              id='form7' 
+              type='text' 
+              value={city}
+              onChange={ev => setCity(ev.target.value)}
+              required
+            />
+            <MDBInput 
+              wrapperClass='mb-4' 
+              label='State' 
+              size='lg' 
+              id='form8' 
+              type='text' 
+              value={state}
+              onChange={ev => setState(ev.target.value)}
+              required
+            />
+            <MDBInput 
+              wrapperClass='mb-4' 
+              label='Postal Code' 
+              size='lg' 
+              id='form9' 
+              type='text' 
+              value={postalCode}
+              onChange={ev => setPostalCode(ev.target.value)}
+              required
+            />
+            <MDBInput 
+              wrapperClass='mb-4' 
+              label='Country' 
+              size='lg' 
+              id='form10' 
+              type='text' 
+              value={country}
+              onChange={ev => setCountry(ev.target.value)}
               required
             />
             <div className='d-flex flex-row justify-content-center mb-4'>
