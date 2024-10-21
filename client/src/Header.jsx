@@ -15,47 +15,64 @@ export default function Header() {
 
   return (
     <div>
-      <header className="p-4 flex-col bg-gradient-to-t from-[#f6f1f1] to-[#FFDFDF] text-black">
-        <div className="flex items-center">
+      <header className="p-4 bg-gradient-to-t from-[#f6f1f1] to-[#FFDFDF] text-black">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-1">
-            <img src={HotelLogo} alt="Hotel Blissful Logo" className="max-w-[100px] max-h-[100px] bg-transparent" />
-            <span className="font-bold font-mono italic text-2xl text-amber-800 hover:underline">Hotel Blissful</span>
+            <img src={HotelLogo} alt="Hotel Blissful Logo" className="max-w-[80px] max-h-[80px] bg-transparent" />
+            <span className="font-bold font-mono italic text-xl text-amber-800 hover:underline">Hotel Blissful</span>
           </Link>
-          <div className="container m-auto">
-            <div className="flex text-lg justify-center text-center gap-40">
-              <Link to="/amenities" className="flex box-border items-center gap-10 pt-1 hover:scale-110 active:border-white">
-                <FontAwesomeIcon icon={faBellConcierge} />
-                <p className="pt-2">Amenities</p>
-              </Link>
-              <Link to="/services" className="flex box-border items-center gap-10 hover:scale-110 active:border-white">
-                <FontAwesomeIcon icon={faCircleInfo} />
-                <span>Services & Info</span>
-              </Link>
-              <Link to="/reservations" className="flex box-border items-center gap-10 hover:scale-110 active:border-white">
-                <FontAwesomeIcon icon={faCalendarCheck} />
-                <span>Find Your Reservation</span>
-              </Link>
-            </div>
+
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden">
+            <FontAwesomeIcon icon={faBars} className="text-2xl cursor-pointer" />
           </div>
-          <div className="flex-col items-center">
-            {user && (
-              <p className="text-center mb-2">Hi, {user.name}</p>
-            )}
-            <Link to={user ? '/account' : '/login'} className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-4 ">
-              <div className="flex flex-col items-center ">
-                <FontAwesomeIcon icon={faBars} />
-              </div>
-              <div className="flex flex-col items-center">
-                <p className="text-xs pt-3">Login/Register</p>
-              </div>
-              <div className="flex flex-col items-center bg-gray-500 text-white rounded-full border border-gray-500 p-1 overflow-hidden">
-                <FontAwesomeIcon icon={faUser} />
-              </div>
-              <div className="flex flex-col items-center">
-                <p className="text-xs pt-3">Account</p>
-              </div>
+
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex container justify-center gap-16">
+            <Link to="/amenities" className="flex items-center gap-2 hover:scale-105">
+              <FontAwesomeIcon icon={faBellConcierge} />
+              <span>Amenities</span>
+            </Link>
+            <Link to="/services" className="flex items-center gap-2 hover:scale-105">
+              <FontAwesomeIcon icon={faCircleInfo} />
+              <span>Services & Info</span>
+            </Link>
+            <Link to="/reservations" className="flex items-center gap-2 hover:scale-105">
+              <FontAwesomeIcon icon={faCalendarCheck} />
+              <span>Reservations</span>
             </Link>
           </div>
+
+          {/* User Account Section */}
+          <div className="flex items-center gap-4">
+            {user && (
+              <p className="hidden md:block text-sm">Hi, {user.name}</p>
+            )}
+            <Link
+              to={user ? '/account' : '/login'}
+              className="flex items-center gap-2 border border-gray-300 rounded-full py-2 px-3 text-sm"
+            >
+              <FontAwesomeIcon icon={faUser} />
+              <span>{user ? "Account" : "Login/Register"}</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Mobile Nav Links (Visible on smaller screens) */}
+        <div className="flex md:hidden justify-center mt-4 gap-8">
+          <Link to="/amenities" className="flex items-center gap-2 hover:scale-105">
+            <FontAwesomeIcon icon={faBellConcierge} />
+            <span>Amenities</span>
+          </Link>
+          <Link to="/services" className="flex items-center gap-2 hover:scale-105">
+            <FontAwesomeIcon icon={faCircleInfo} />
+            <span>Services</span>
+          </Link>
+          <Link to="/reservations" className="flex items-center gap-2 hover:scale-105">
+            <FontAwesomeIcon icon={faCalendarCheck} />
+            <span>Reservations</span>
+          </Link>
         </div>
       </header>
     </div>
