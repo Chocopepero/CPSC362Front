@@ -51,3 +51,7 @@ button.primary{
     background-color: rgb(59 130 246);
     font-display: white;
 }
+
+html, body {
+    overflow-x: hidden;
+}
